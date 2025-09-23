@@ -1,0 +1,20 @@
+[
+    {
+        "id": 2,
+        "title": "Giao ti?p liên van hóa",
+        "tag": "unk",
+        "image": "https://empty-apes-press.loca.lt/FileImage/2.png",
+        "description": "Mua vandal champion",
+        "releaseDate": "2025-12-12",
+        "content": "https://empty-apes-press.loca.lt/FileHtml/2.html"
+    },
+    {
+        "id": 1,
+        "title": "Nh?p môn k? thu?t",
+        "tag": "unk",
+        "image": "https://empty-apes-press.loca.lt/FileImage/1.png",
+        "description": "Nh?p môn ki thu?t nhóm 8",
+        "releaseDate": "2025-12-12",
+        "content": "https://empty-apes-press.loca.lt/FileHtml/1.html"
+    }
+]

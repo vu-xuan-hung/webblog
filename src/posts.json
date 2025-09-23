@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Nhập môn kỹ thuật",
+    "tag": "unk",
+    "image": "https://empty-apes-press.loca.lt/FileImage/1.png",
+    "description": "Nhóm 8.4",
+    "releaseDate": "2025-12-12",
+    "content": "https://empty-apes-press.loca.lt/FileHtml/1.html"
+  },
+  {
+    "id": 3,
+    "title": "Nhập môn kỹ thuật",
+    "tag": "unk",
+    "image": "https://empty-apes-press.loca.lt/FileImage/1.png",
+    "description": "Nhóm 8.4",
+    "releaseDate": "2025-12-12",
+    "content": "https://empty-apes-press.loca.lt/FileHtml/1.html"
+  }
+]

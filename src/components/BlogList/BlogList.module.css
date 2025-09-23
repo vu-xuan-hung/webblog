@@ -1,0 +1,19 @@
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  margin-left: 110px;
+}
+
+.loader {
+  text-align: center;
+  padding: 1rem;
+  color: gray;
+  font-weight: bold;
+}
+.xd {
+  display: grid;
+  grid-template-columns: 250px 250px 250px; /* 3 cột */
+  gap: 4.5rem; /* khoảng cách giữa các card */
+}
