@@ -1,20 +1,37 @@
-import React, { useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState,useEffect } from "react";
 //sử dụng đúng props object const AdminProfile = ({ isDarkMode, setIsDarkMode }) =>
 const AdminProfile = ({ isDarkMode, setIsDarkMode }) => {
+const [isCount,setIsCount]=useState(0);
+  const apiUrl = import.meta.env.VITE_FILE_ALL;
     const admin = {
         name: "Admin User",
         role: "Software Developer",
         email: "admin@gmail.com",
-        totalBlogs: 3,
-        avatar: "../../../public/1.jpg", // link ảnh avatar
+        totalBlogs: isCount,
+        avatar: "/1.jpg", // link ảnh avatar
     };
-
+        
     const handleLogout = () => {
         localStorage.removeItem("adminToken");
         localStorage.removeItem("expiry");
         window.location.href = "/admin/adminLogin"; // điều hướng về login
     };
 
+    useEffect(()=>{
+        async function fetch() {
+            try {
+            //Có await → code dừng lại ở đó, đợi Promise trả về kết quả, rồi mới chạy tiếp.
+            const res= await fetch(apiUrl);
+            const data=await res.json();
+            setIsCount(data.length);
+        } catch (error) {
+            console.log("err");
+        }
+        }
+        fetch();
+        
+    },[apiUrl])
     return (
         <div className="flex justify-center items-center min-h-screen "
         >

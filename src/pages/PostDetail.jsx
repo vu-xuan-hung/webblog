@@ -66,7 +66,7 @@ export default function PostDetail() {
     async function fetchPosts() {
       //Dùng await để đợi kết quả từ fetch và res.json().
       //await chỉ dùng được trong hàm async, Nó sẽ dừng tạm thời việc chạy code trong hàm, cho đến khi Promise trả về kết quả (resolve hoặc reject).
-
+//fetchPosts() là hàm async → khi component render lần đầu, nó sẽ gọi API nhưng chưa có dữ liệu ngay lập tức.
       try {
         const res = await fetch(apiUrl);//res là đối tượng Response.
         const data = await res.json();//Chuyển dữ liệu JSON từ API thành JavaScript object/array.
@@ -90,8 +90,15 @@ export default function PostDetail() {
   useEffect(() => {
     const foundPost = allPosts.find((p) => String(p.id) === id);
     setPost(foundPost);
-  }, [id]);
+  }, [id,allPosts]);
+  //[id, allPosts] → cập nhật khi có dữ liệu mới và khi đổi id.
+  //Khi id thay đổi → chạy lại useEffect.
+// Khi allPosts thay đổi (do fetch API thành công) → cũng chạy lại useEffect.
+// lần đầu render, allPosts mặc định là [] → find sẽ trả về undefined.
 
+// Sau khi fetch API xong, bạn setAllPosts(mapped) → state allPosts thay đổi.
+
+// Nếu dependency array chỉ có [id], thì useEffect không chạy lại khi allPosts đổi. Kết quả là post mãi bằng undefined.
   if (!post) {
     return <Container>Bài viết không tồn tại!</Container>;
   }
@@ -102,7 +109,9 @@ export default function PostDetail() {
       {post.description && <Description>{post.description}</Description>}
       {post.content &&
         <IframeWrapper>
-          <Iframe1 src="/x/x.htm" />
+          <Iframe1 src={post.content}/>
+          
+         
         </IframeWrapper>
       }
     </Container >

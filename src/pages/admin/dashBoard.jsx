@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import postsData from "../../posts.json"
 import { Link, Router } from 'react-router-dom';
 import HomePage from '../HomePage';
@@ -36,7 +36,7 @@ const Dashboard = () => {
             alert("Lỗi kết nối server");
         }
     };
-
+   
 
 
     // Hàm xử lý khi người dùng nhấn nút tạo ý tưởng blog
@@ -78,9 +78,6 @@ const Dashboard = () => {
             </div>
 
             <hr style={styles.separator} />
-
-
-
 
             {/* Phần bảng danh sách blog */}
             <div style={styles.blogTableContainer}>

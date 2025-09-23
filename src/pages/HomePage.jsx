@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -296,7 +297,8 @@ const HomePage = ({ isDarkMode, setIsDarkMode }) => {
 
         >
           {currentPosts.map((post, index) => (
-            <Link key={index} to={`/post/${post.id}`} style={{ textDecoration: "none" }}>
+            <Link key={post.id} to={`/post/${post.id}`} style={{ textDecoration: "none" }}>
+              {/* key={index} */}
               <Card
                 style={{ backgroundColor: isDarkMode ? ' #c2edda' : '#fff' }}
               >
@@ -356,7 +358,7 @@ const HomePage = ({ isDarkMode, setIsDarkMode }) => {
       {/* Sidebar */}
       <FeaturedPostsSidebar
         isDarkMode={isDarkMode}
-        posts={posts} />
+        posts={allPosts} />
     </Container>
   );
 };

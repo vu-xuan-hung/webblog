@@ -21,7 +21,25 @@ function App1() {
     const [isDarkMode, setIsDarkMode] = useLocalStorage("isDark", preference);
 
     const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
-
+     const [isCountV,setIsCountV]=useState(0);
+     const [isCount,setIsCount]=useState(0);
+    const apiUrl=import.meta.env.VITE_FILE_ALL;
+    useEffect(()=>{
+        async function count() {
+            const res=await fetch(apiUrl);
+            const data=await res.json();
+            let views=0;
+           
+            for(let i of data){
+                views+=i.view;
+               
+            }
+            
+            setIsCountV(views);
+            setIsCount(data.length);
+        }
+        count();
+    },[apiUrl])
     useEffect(() => {
         document.body.setAttribute("data-theme", isDarkMode ? "dark" : "light");
     }, [isDarkMode]);
@@ -86,7 +104,7 @@ function App1() {
                         }}>
                         <PeopleIcon />
                         <p>Total Views</p>
-                        <h3>99999</h3>
+                    <h3>{isCountV}</h3>
                     </div>
                 </div>
                 <div className="k">
@@ -99,7 +117,7 @@ function App1() {
                     }}>
                         <ArticleIcon />
                         <p>Total post</p>
-                        <h3>x</h3>
+                        <h3>{isCount}</h3>
                     </div>
 
                 </div>
@@ -112,8 +130,8 @@ function App1() {
                         textAlign: 'center',
                     }}>
                         <ArticleIcon />
-                        <p>Total post</p>
-                        <h3>x</h3>
+                        <p>Total money</p>
+                        <h3>23565.15$</h3>
                     </div>
 
                 </div>
@@ -126,8 +144,8 @@ function App1() {
                         textAlign: 'center',
                     }}>
                         <ArticleIcon />
-                        <p>Total post</p>
-                        <h3>x</h3>
+                        <p>Total Member</p>
+                        <h3>2</h3>
                     </div>
 
                 </div>
