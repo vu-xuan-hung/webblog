@@ -9,12 +9,11 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import PostDetail from "./pages/PostDetail.jsx";
 import BlogList from "./components/BlogList/BlogList";
-
 import SearchResult from "./pages/SearchResult.jsx";
 import useLocalStorage from "use-local-storage";
 
 function App() {
-  const apiUrl = import.meta.env.VITE_API_WEB;
+  const apiUrl = import.meta.env.VITE_FILE_NEW;
 
   const preference = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [isDarkMode, setIsDarkMode] = useLocalStorage("isDark", preference);
@@ -34,10 +33,10 @@ function App() {
         const mapped = data.map((x) => ({
           id: x.id ?? "unk",
           title: x.title ?? "unk",
-          tag: x.tag ?? "unk",
           image: `${apiUrl}/FileImage/${x.id}.png`,
           description: x.description ?? "unk",
           releaseDate: x.releaseDate ?? "unk",
+          view: x.view ?? 0,
           content: `${apiUrl}/FileHtml/${x.id}.html`,
         }));
 

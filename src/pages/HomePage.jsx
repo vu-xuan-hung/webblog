@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import posts from "../posts.json"; // 
+import { useEffect } from "react";
+
 import PaginationLink from "../components/Pagination/PaginationK.jsx";
 import FeaturedPostsSidebar from "../components/FeaturedPostsSidebar/FeaturedPostsSidebar.jsx";
-import { background } from "@chakra-ui/react";
+
 
 
 // Styled Components
@@ -235,7 +236,41 @@ const PaginationContainer = styled.div`
   margin-top: 2rem; 
 `;
 const HomePage = ({ isDarkMode, setIsDarkMode }) => {
-  const mainBlogPosts = posts.filter(post => post.tag !== "Featured");//loc bai viet ko co featured
+  const [allPosts, setAllPosts] = useState([]);
+  const apiUrl = import.meta.env.VITE_API_WEB;
+
+  useEffect(() => {
+    //khai báo một hàm bất đồng bộ
+    //Khi một hàm có async, nó sẽ luôn trả về một Promise.
+    //Promise là một đối tượng trong JavaScript dùng để xử lý bất đồng bộ, Promise = đối tượng đại diện cho giá trị chưa có ngay (giống "phiếu hẹn").
+    async function fetchPosts() {
+      //Dùng await để đợi kết quả từ fetch và res.json().
+      //await chỉ dùng được trong hàm async, Nó sẽ dừng tạm thời việc chạy code trong hàm, cho đến khi Promise trả về kết quả (resolve hoặc reject).
+
+      try {
+        const res = await fetch(apiUrl);//res là đối tượng Response.
+        const data = await res.json();//Chuyển dữ liệu JSON từ API thành JavaScript object/array.
+        const mapped = data.map((x) => ({
+          id: x.id ?? "unk",
+          title: x.title ?? "unk",
+          image: `${apiUrl}/FileImage/${x.id}.png`,
+          description: x.description ?? "unk",
+          releaseDate: x.releaseDate ?? "unk",
+          content: `${apiUrl}/FileHtml/${x.id}.html`,
+          view: x.view ?? 0,
+        }));
+
+        setAllPosts(mapped); // lưu vào state
+      } catch (err) {
+        console.error("Lỗi fetch API:", err);
+      }
+    }
+
+    fetchPosts();
+  }, [apiUrl]); // chạy 1 lần khi component mount
+
+
+  const mainBlogPosts = allPosts.filter(post => post.tag !== "Featured");//loc bai viet ko co featured
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 8;// mỗi trang 7 bài
   const startIndex = (currentPage - 1) * postsPerPage;// 0
@@ -276,7 +311,7 @@ const HomePage = ({ isDarkMode, setIsDarkMode }) => {
                     </CardData>
                     <CardView>
                       <LogoImage src="./logo1.png" alt="" />
-                      <span>8000</span>
+                      <span>{post.view}</span>
                     </CardView>
                   </MainContent1>
                 </CardContent>

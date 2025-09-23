@@ -20,7 +20,6 @@ export default function BlogList() {
                 const mapped = data.map((x) => ({
                     id: x.id ?? "unk",
                     title: x.title ?? "unk",
-                    tag: x.tag ?? "unk",
                     image: `${apiUrl}/FileImage/${x.id}.png`,
                     description: x.description ?? "unk",
                     releaseDate: x.releaseDate ?? "unk",

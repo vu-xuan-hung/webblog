@@ -16,7 +16,7 @@ const FeaturedPosts = ({ posts }) => {
                                 <img src={post.image} alt={post.title} className={styles.postImage} />
                             </div>
                             <div className={styles.postContent}>
-                                <p className={styles.postDate}>{post.date}</p>
+                                <p className={styles.postDate}>{post.releaseDate}</p>
                                 <h4 className={styles.postTitle}>{post.title}</h4>
                             </div>
                         </div>
