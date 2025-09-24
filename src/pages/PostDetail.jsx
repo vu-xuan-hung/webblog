@@ -57,7 +57,7 @@ export default function PostDetail() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [allPosts, setAllPosts] = useState([]);
-  const apiUrl = import.meta.env.VITE_API_WEB;
+  const apiUrl = import.meta.env.VITE_FILE_ALL;
 
   useEffect(() => {
     //khai báo một hàm bất đồng bộ
@@ -73,10 +73,27 @@ export default function PostDetail() {
         const mapped = data.map((x) => ({
           id: x.id ?? "unk",
           title: x.title ?? "unk",
-          image: `${apiUrl}/FileImage/${x.id}.png`,
+          image: `${apiUrl.split('/api')[0]}/uploads/${x.image}`,
           description: x.description ?? "unk",
           releaseDate: x.releaseDate ?? "unk",
-          content: `${apiUrl}/FileHtml/${x.id}.html`,
+          content: `${apiUrl.split('/api')[0]}/uploads/${x.content}`,
+
+/*           1. ${apiUrl.split('/api')[0]}
+ Phần này lấy URL cơ sở (base URL) của API của bạn.
+ apiUrl là một biến chứa URL của API, ví dụ: http://localhost:3000/api/blogs.
+ .split('/api') chia chuỗi apiUrl thành một mảng các chuỗi, sử dụng chuỗi '/api' làm điểm phân tách.
+Ví dụ: http://localhost:3000/api/blogs.split('/api')sẽ tạo ra mảng['http://localhost:3000', '/blogs']`.
+ [0] lấy phần tử đầu tiên của mảng, tức là http://localhost:3000.
+kết  quả cuối cùng là URL gốc của server, không bao gồm phần đường dẫn API.
+
+Giả sử các giá trị sau:
+apiUrl = "http://localhost:3000/api/blogs"
+x.content = "1758722870732-x.html
+Đoạn mã sẽ được xử lý như sau:
+${apiUrl.split('/api')[0]} sẽ trả về "http://localhost:3000".
+Sau đó, các chuỗi sẽ được nối lại: "http://localhost:3000" + "/uploads/" + "1758722870732-x.htm".
+Kết quả cuối cùng là một URL hoàn chỉnh và chính xác: http://localhost:3000/uploads/1758722870732-x.htm.
+*/
         }));
 
         setAllPosts(mapped); // lưu vào state

@@ -1,11 +1,15 @@
-// src/components/FileUploader.jsx
+// src/components/UploadFile.jsx
 import { useState } from "react";
 
-function FileUploader({ id, title, fileTypes, onChange }) {
+// Add props as an argument, and destructure the onChange prop
+function UploadImg({ onChange}) {
     const [files, setFiles] = useState([]);
 
     const handleFiles = (newFiles) => {
+        // Update the internal state for the file list display
         setFiles((prev) => [...prev, ...Array.from(newFiles)]);
+        
+        // Pass the files to the parent component via the onChange prop
         if (onChange) {
             onChange(newFiles);
         }
@@ -21,7 +25,7 @@ function FileUploader({ id, title, fileTypes, onChange }) {
     };
 
     const handleUploadClick = () => {
-        document.getElementById(id).click();
+       document.getElementById("image-file-input").click();
     };
 
     const formatBytes = (bytes, decimals = 2) => {
@@ -36,13 +40,14 @@ function FileUploader({ id, title, fileTypes, onChange }) {
     return (
         <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8 space-y-8">
             <header className="text-center">
-                <h1 className="text-3xl font-bold text-gray-800">{title}</h1>
+                <h1 className="text-3xl font-bold text-gray-800">File Uploader</h1>
                 <p className="mt-2 text-base text-gray-500">
                     Drag and drop your files here to upload.
                 </p>
             </header>
 
             <main className="space-y-6">
+                {/* Drop Zone */}
                 <div
                     id="drop-zone"
                     className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-6 flex items-center justify-center text-center transition-all duration-300 ease-in-out"
@@ -53,13 +58,7 @@ function FileUploader({ id, title, fileTypes, onChange }) {
                     }}
                     onClick={handleUploadClick}
                 >
-                    <input 
-                        id={id} 
-                        type="file" 
-                        className="hidden" 
-                        multiple 
-                        onChange={(e) => handleFiles(e.target.files)} 
-                    />
+                    <input id="file-input" type="file" className="hidden" multiple onChange={(e) => handleFiles(e.target.files)} />
                     <div>
                         <svg
                             className="mx-auto h-12 w-12 text-gray-400"
@@ -77,10 +76,11 @@ function FileUploader({ id, title, fileTypes, onChange }) {
                         <p className="mt-2 text-sm text-gray-600">
                             <span className="font-semibold">Click to upload</span> or drag and drop
                         </p>
-                        <p className="text-xs text-gray-500">{fileTypes}</p>
+                        <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
                     </div>
                 </div>
 
+                {/* File List */}
                 <div id="file-list-container" className="space-y-4">
                     <h2 className="text-xl font-semibold text-gray-700">Uploaded Files</h2>
                     {files.length === 0 ? (
@@ -105,4 +105,4 @@ function FileUploader({ id, title, fileTypes, onChange }) {
     );
 }
 
-export default FileUploader;
+export default UploadImg;
