@@ -13,7 +13,7 @@ import SearchResult from "./pages/SearchResult.jsx";
 import useLocalStorage from "use-local-storage";
 
 function App() {
-  const apiUrl = import.meta.env.VITE_FILE_NEW;
+  const apiUrl =  import.meta.env.VITE_FILE_ALL;
 
   const preference = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [isDarkMode, setIsDarkMode] = useLocalStorage("isDark", preference);

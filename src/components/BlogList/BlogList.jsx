@@ -10,7 +10,7 @@ export default function BlogList() {
     const [visiblePosts, setVisiblePosts] = useState([]);
     const [page, setPage] = useState(1);
     const loader = useRef(null);
-    const apiUrl = import.meta.env.VITE_API_WEB;
+    const apiUrl =  import.meta.env.VITE_FILE_ALL;
     const [posts, setPosts] = useState([]);
     useEffect(() => {
         async function fetchPosts() {
@@ -39,7 +39,7 @@ export default function BlogList() {
     useEffect(() => {
         setAllPosts(posts.slice(0, 7));
         setVisiblePosts(posts.slice(0, 6));
-    }, []);
+    }, [posts]);
 
     // Mỗi khi page thay đổi thì load thêm bài
     useEffect(() => {

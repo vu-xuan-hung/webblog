@@ -3,7 +3,7 @@ import React, { useState,useEffect } from "react";
 //sử dụng đúng props object const AdminProfile = ({ isDarkMode, setIsDarkMode }) =>
 const AdminProfile = ({ isDarkMode, setIsDarkMode }) => {
 const [isCount,setIsCount]=useState(0);
-  const apiUrl = import.meta.env.VITE_FILE_ALL;
+  const apiUrl =  import.meta.env.VITE_FILE_ALL;
     const admin = {
         name: "Admin User",
         role: "Software Developer",
@@ -19,7 +19,7 @@ const [isCount,setIsCount]=useState(0);
     };
 
     useEffect(()=>{
-        async function fetch() {
+        async function fetchPosts() {
             try {
             //Có await → code dừng lại ở đó, đợi Promise trả về kết quả, rồi mới chạy tiếp.
             const res= await fetch(apiUrl);
@@ -29,7 +29,7 @@ const [isCount,setIsCount]=useState(0);
             console.log("err");
         }
         }
-        fetch();
+        fetchPosts();
         
     },[apiUrl])
     return (
@@ -53,7 +53,7 @@ const [isCount,setIsCount]=useState(0);
                 <p className="text-gray-600">{admin.role}</p>
                 <p className="text-gray-500">{admin.email}</p>
                 <p className="mt-2 font-semibold text-gray-500">
-                    Total Blogs:{" "}
+                    Total Blogs: 
                     <span className="text-blue-600">{admin.totalBlogs}</span>
                 </p>
 

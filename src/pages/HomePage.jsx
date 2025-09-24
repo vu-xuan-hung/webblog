@@ -238,7 +238,7 @@ const PaginationContainer = styled.div`
 `;
 const HomePage = ({ isDarkMode, setIsDarkMode }) => {
   const [allPosts, setAllPosts] = useState([]);
-  const apiUrl = import.meta.env.VITE_API_WEB;
+  const apiUrl = import.meta.env.VITE_FILE_ALL;
 
   useEffect(() => {
     //khai báo một hàm bất đồng bộ

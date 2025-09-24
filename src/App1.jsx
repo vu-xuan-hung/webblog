@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import "./App1.css";
 import CreateBlog from "./pages/admin/createBlog.jsx";
 import PrivateRoute from "./pages/admin/PrivateRoute.jsx";
@@ -15,31 +16,51 @@ import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import useLocalStorage from "use-local-storage";
 import React, { useState, useEffect } from "react";
+
 function App1() {
     const navigate = useNavigate();
     const preference = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const [isDarkMode, setIsDarkMode] = useLocalStorage("isDark", preference);
-
+  
     const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
-     const [isCountV,setIsCountV]=useState(0);
-     const [isCount,setIsCount]=useState(0);
-    const apiUrl=import.meta.env.VITE_FILE_ALL;
-    useEffect(()=>{
-        async function count() {
-            const res=await fetch(apiUrl);
-            const data=await res.json();
-            let views=0;
-           
-            for(let i of data){
-                views+=i.view;
-               
+     const [blogs, setBlogs] = useState([]);
+const [isCount, setIsCount] = useState(0);
+const [isCountV, setIsCountV] = useState(0);
+
+const mainBlogPosts = blogs.filter(post => post.tag !== "Featured");
+  const apiUrl= import.meta.env.VITE_FILE_ALL;
+useEffect(() => {
+  async function count() {
+    const res = await fetch(apiUrl);
+    const data = await res.json();
+    let views = 0;
+    for (let i of data) {
+      views += i.view;
+    }
+    setIsCountV(views);
+    setIsCount(data.length);
+    setBlogs(data);
+  }
+  count();
+}, [apiUrl]);
+     const handleDelete = async (idToDelete) => {
+        try {
+            const res = await fetch(`http://localhost:3000/api/blogs/${idToDelete}`, {
+                method: "DELETE",
+            });
+            if (res.ok) {
+                setBlogs(prevBlogs => prevBlogs.filter(post => post.id !== idToDelete));
+            } else {
+                alert("Xóa thất bại!");
             }
-            
-            setIsCountV(views);
-            setIsCount(data.length);
+        } catch (err) {
+            console.error(err);
+            alert("Lỗi kết nối server");
         }
-        count();
-    },[apiUrl])
+    };
+   
+  
+  
     useEffect(() => {
         document.body.setAttribute("data-theme", isDarkMode ? "dark" : "light");
     }, [isDarkMode]);
@@ -91,8 +112,8 @@ function App1() {
         <>
 
             <div className="container">
+         
                 <div className="k"
-
                 >
                     <div className="card"
                         style={{
@@ -150,12 +171,51 @@ function App1() {
 
                 </div>
             </div>
+            {/* Phần bảng danh sách blog */}
+            <div style={{...styles.blogTableContainer, fontWeight: 'bold',}}>
+                <table style={styles.table}>
+                    <thead style={styles.tableHeader}>
+                        <tr>
+                            <th style={styles.th}>S.No</th>
+                            <th style={styles.th}>Thumbnail</th>
+                            <th style={styles.th}>Title</th>
+                            <th style={styles.th}>Date</th>
+                            <th style={styles.th}>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody
+                style={{backgroundColor: isDarkMode ? '#c2edda' : '#fff', // màu nền khi dark/light
+                            color: isDarkMode ? '#333' : '#333',             // màu chữ khi dark/light
+                            }}
+                    >
+                        {mainBlogPosts.map((post, index) => (
+
+                            <tr key={index} style={styles.tableRow}>
+                                <td style={styles.td}>{index + 1}</td>
+                                <td style={styles.td}>
+                                    <img src={post.thumbnail} alt="Thumbnail" style={styles.blogThumbnail} />
+                                </td>
+                                <td style={styles.td}>{post.title}</td>
+
+                                <td style={styles.td}>{post.releaseDate}</td>
+                                <td style={styles.td}>
+                                    <button onClick={() => handleDelete(post.id)} style={styles.deleteBtn}>
+                                        Delete
+                                    </button>
+
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            
         </>
     );
 
     return (
 
-        <div className="admin-layout">
+       <>
             {/* Sidebar */}
             <div className="sidebar">
                 <ul>
@@ -253,12 +313,86 @@ function App1() {
                     <Route path="admin" element={<Dashboard />} />
                 </Routes>
             </div >
-        </div >
+        </>
     );
 }
 
 export default App1;
+const styles = {
+    dashboard: {
+        fontFamily: 'Arial, sans-serif',
+        padding: '20px',
+        backgroundColor: '#f0f2f5',
+        alignItems:'center',
+    },
+    details: {
+        lineHeight: '1.5',
+    },
+    name: {
+        margin: '0',
+        fontSize: '1.5em',
+    },
+    text: {
+        margin: '0',
+    },
+    totalBlogs: {
+        fontWeight: 'bold',
+    },
+    actions: {
+        display: 'flex',
+    },
+  
+ 
+    separator: {
+        border: '0',
+        borderTop: '1px solid #ccc',
+        margin: '20px 0',
+    },
+  
+    blogTableContainer: {
+        
+        marginTop: '20px',
+        backgroundColor: 'white',
+        borderRadius: '10px',
+        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
 
+    },
+    table: {
+            width: '100%',
+        borderCollapse: 'collapse',
+    },
+    tableHeader: {
+        backgroundColor: '#34495e',
+        color: 'white',
+        alignItems: 'left'
+    },
+    th: {
+        padding: '15px',
+        textAlign: 'left',
 
+    },
+    td: {
+        padding: '15px',
+        borderBottom: '1px solid #ddd',
+        margin: 'auto',
+        textAlign: 'left',
+        overflow: 'hidden'
+    },
+    blogThumbnail: {
+        width: '50px',
+        height: '30px',
+        objectFit: 'cover',
+        borderRadius: '2px',
+        overflow: 'hidden'
+    },
+    deleteBtn: {
+        backgroundColor: '#e74c3c',
+        color: 'white',
+        border: 'none',
+        padding: '8px 12px',
+        borderRadius: '5px',
+        cursor: 'pointer',
+    },
+};
 {/* <Route> (có path và element). */ }
 {/* <Link> chỉ để chuyển trang, nó chỉ cần to="/...". */ }
