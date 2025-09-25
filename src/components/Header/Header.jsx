@@ -50,13 +50,16 @@ const Header = ({ isDarkMode, toggleDarkMode }) => {
     return (
         <header className={styles.header}>
             <div className={styles.logo}>
-                <span className={styles.logoText}>3tocom</span>
+
+                <span className={styles.logoText}>khaicube</span>
             </div>
             <nav className={styles.nav}>
-                <Link to="/" className={styles.navLink}>Home</Link>
-                <Link to="/blog" className={styles.navLink}>Blog</Link>
-                <Link to="/contact" className={styles.navLink}>Contact</Link>
-                <Link to="/aplicate" className={styles.navLink}>Aplicate</Link>
+                <div className={styles.highlight}></div>
+                <li><Link to="/" className={styles.navLink}>Home</Link></li>
+                <li><Link to="/blog" className={styles.navLink}>Blog</Link></li>
+                <li><Link to="/contact" className={styles.navLink}>Contact</Link></li>
+                <li>  <Link to="/aplicate" className={styles.navLink}>Aplicate</Link>
+                </li>
             </nav>
             <SearchBar />
 

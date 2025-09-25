@@ -1,6 +1,6 @@
 // src/components/CreateBlog.jsx
 /* eslint-disable no-unused-vars */
-import FileUploader from "./UpLoad"; 
+import FileUploader from "./UpLoad";
 import { useState } from "react";
 
 function CreateBlog() {
@@ -8,6 +8,10 @@ function CreateBlog() {
     const [description, setDescription] = useState("");
     const [imageFile, setImageFile] = useState(null);
     const [htmlFile, setHtmlFile] = useState(null);
+    const apiUrl = import.meta.env.VITE_FILE_ALL_CONTENT;
+
+    const apiUrl1 = import.meta.env.VITE_FILE_ALL_CONTENT_HTML;
+    const apiUrl2 = import.meta.env.VITE_FILE_ALL_CONTENT_FOLDER;
 
     const handleHtmlFile = (files) => {
         if (files && files.length > 0) {
@@ -23,26 +27,58 @@ function CreateBlog() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("description", description);
-        formData.append("releaseDate", new Date().toISOString());
-
-        if (imageFile) formData.append("imageFile", imageFile);
-        if (htmlFile) formData.append("htmlFile", htmlFile);
+        // title, description, releaseDate
+        const formDataBase = new FormData();
+        formDataBase.append("title", title);
+        formDataBase.append("description", description);
+        formDataBase.append("releaseDate", new Date().toISOString());
+        formDataBase.append("views", 0);
 
         try {
-            const res = await fetch("http://localhost:3000/api/blogs", {
+            const res = await fetch(apiUrl, {
                 method: "POST",
-                body: formData,
+                body: formDataBase,
             });
-
             const data = await res.json();
-            console.log("Blog created:", data);
+            console.log(" blog created:", data);
         } catch (error) {
-            console.error("Error:", error);
+            console.error("Error :", error);
         }
+
+        // file HTML
+        if (htmlFile) {
+            const formDataHtml = new FormData();
+            formDataHtml.append("file", htmlFile);
+
+            try {
+                const resHtml = await fetch(apiUrl1, {
+                    method: "POST",
+                    body: formDataHtml,
+                });
+                const dataHtml = await resHtml.json();
+                console.log("HTML :", dataHtml);
+            } catch (error) {
+                console.error("Error ", error);
+            }
+        }
+
+        // folder Image
+        if (imageFile) {
+            const formDataImage = new FormData();
+            formDataImage.append("files", imageFile);
+
+            try {
+                const resImg = await fetch(apiUrl2, {
+                    method: "POST",
+                    body: formDataImage,
+                });
+                const dataImg = await resImg.json();
+                console.log("Image :", dataImg);
+            } catch (error) {
+                console.error("Error", error);
+            }
+        }
+
     };
 
     return (

@@ -1,13 +1,5 @@
 [
   {
-    "id": 4,
-    "title": "cs",
-    "description": "cs",
-    "image": "1758723913937-show.png",
-    "content": "1758723913941-x.htm",
-    "releaseDate": "24/9/2025"
-  },
-  {
     "id": 1,
     "title": "Hello World",
     "description": "Đây là một bài viết mẫu",

@@ -1,37 +1,41 @@
 /* eslint-disable no-unused-vars */
-import React, { useState,useEffect } from "react";
+import { avatar } from "@material-tailwind/react";
+import React, { useState, useEffect } from "react";
 //sử dụng đúng props object const AdminProfile = ({ isDarkMode, setIsDarkMode }) =>
 const AdminProfile = ({ isDarkMode, setIsDarkMode }) => {
-const [isCount,setIsCount]=useState(0);
-  const apiUrl =  import.meta.env.VITE_FILE_ALL;
+    const [isCount, setIsCount] = useState(0);
+    const [isFull, setIsFull] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
+
+    const apiUrl = import.meta.env.VITE_FILE_ALL;
     const admin = {
         name: "Admin User",
         role: "Software Developer",
         email: "admin@gmail.com",
         totalBlogs: isCount,
-        avatar: "/1.jpg", // link ảnh avatar
+        avatar: "/c.png", // link ảnh avatar
     };
-        
+
     const handleLogout = () => {
         localStorage.removeItem("adminToken");
         localStorage.removeItem("expiry");
         window.location.href = "/admin/adminLogin"; // điều hướng về login
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         async function fetchPosts() {
             try {
-            //Có await → code dừng lại ở đó, đợi Promise trả về kết quả, rồi mới chạy tiếp.
-            const res= await fetch(apiUrl);
-            const data=await res.json();
-            setIsCount(data.length);
-        } catch (error) {
-            console.log("err");
-        }
+                //Có await → code dừng lại ở đó, đợi Promise trả về kết quả, rồi mới chạy tiếp.
+                const res = await fetch(apiUrl);
+                const data = await res.json();
+                setIsCount(data.length);
+            } catch (error) {
+                console.log("err");
+            }
         }
         fetchPosts();
-        
-    },[apiUrl])
+
+    }, [apiUrl])
     return (
         <div className="flex justify-center items-center min-h-screen "
         >
@@ -43,6 +47,7 @@ const [isCount,setIsCount]=useState(0);
             >
                 {/* Avatar */}
                 <img
+
                     src={admin.avatar}
                     alt="avatar"
                     className="w-24 h-24 rounded-full mx-auto border-4 border-blue-500"
@@ -53,7 +58,7 @@ const [isCount,setIsCount]=useState(0);
                 <p className="text-gray-600">{admin.role}</p>
                 <p className="text-gray-500">{admin.email}</p>
                 <p className="mt-2 font-semibold text-gray-500">
-                    Total Blogs: 
+                    Total Blogs:
                     <span className="text-blue-600">{admin.totalBlogs}</span>
                 </p>
 
