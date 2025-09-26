@@ -66,34 +66,34 @@ export default function PostDetail() {
     async function fetchPosts() {
       //Dùng await để đợi kết quả từ fetch và res.json().
       //await chỉ dùng được trong hàm async, Nó sẽ dừng tạm thời việc chạy code trong hàm, cho đến khi Promise trả về kết quả (resolve hoặc reject).
-//fetchPosts() là hàm async → khi component render lần đầu, nó sẽ gọi API nhưng chưa có dữ liệu ngay lập tức.
+      //fetchPosts() là hàm async → khi component render lần đầu, nó sẽ gọi API nhưng chưa có dữ liệu ngay lập tức.
       try {
         const res = await fetch(apiUrl);//res là đối tượng Response.
         const data = await res.json();//Chuyển dữ liệu JSON từ API thành JavaScript object/array.
         const mapped = data.map((x) => ({
           id: x.id ?? "unk",
           title: x.title ?? "unk",
-          image: `${apiUrl.split('/api')[0]}/uploads/${x.image}`,
+          image: `${apiUrl.split('/api')[0]}/FileHtml/${x.id}`,
           description: x.description ?? "unk",
           releaseDate: x.releaseDate ?? "unk",
-          content: `${apiUrl.split('/api')[0]}/uploads/${x.content}`,
+          content: `${apiUrl.split('/posts')[0]}/FileHtml/${x.id}.html`,
 
-/*           1. ${apiUrl.split('/api')[0]}
- Phần này lấy URL cơ sở (base URL) của API của bạn.
- apiUrl là một biến chứa URL của API, ví dụ: http://localhost:3000/api/blogs.
- .split('/api') chia chuỗi apiUrl thành một mảng các chuỗi, sử dụng chuỗi '/api' làm điểm phân tách.
-Ví dụ: http://localhost:3000/api/blogs.split('/api')sẽ tạo ra mảng['http://localhost:3000', '/blogs']`.
- [0] lấy phần tử đầu tiên của mảng, tức là http://localhost:3000.
-kết  quả cuối cùng là URL gốc của server, không bao gồm phần đường dẫn API.
-
-Giả sử các giá trị sau:
-apiUrl = "http://localhost:3000/api/blogs"
-x.content = "1758722870732-x.html
-Đoạn mã sẽ được xử lý như sau:
-${apiUrl.split('/api')[0]} sẽ trả về "http://localhost:3000".
-Sau đó, các chuỗi sẽ được nối lại: "http://localhost:3000" + "/uploads/" + "1758722870732-x.htm".
-Kết quả cuối cùng là một URL hoàn chỉnh và chính xác: http://localhost:3000/uploads/1758722870732-x.htm.
-*/
+          /*           1. ${apiUrl.split('/api')[0]}
+           Phần này lấy URL cơ sở (base URL) của API của bạn.
+           apiUrl là một biến chứa URL của API, ví dụ: http://localhost:3000/api/blogs.
+           .split('/api') chia chuỗi apiUrl thành một mảng các chuỗi, sử dụng chuỗi '/api' làm điểm phân tách.
+          Ví dụ: http://localhost:3000/api/blogs.split('/api')sẽ tạo ra mảng['http://localhost:3000', '/blogs']`.
+           [0] lấy phần tử đầu tiên của mảng, tức là http://localhost:3000.
+          kết  quả cuối cùng là URL gốc của server, không bao gồm phần đường dẫn API.
+          
+          Giả sử các giá trị sau:
+          apiUrl = "http://localhost:3000/api/blogs"
+          x.content = "1758722870732-x.html
+          Đoạn mã sẽ được xử lý như sau:
+          ${apiUrl.split('/api')[0]} sẽ trả về "http://localhost:3000".
+          Sau đó, các chuỗi sẽ được nối lại: "http://localhost:3000" + "/uploads/" + "1758722870732-x.htm".
+          Kết quả cuối cùng là một URL hoàn chỉnh và chính xác: http://localhost:3000/uploads/1758722870732-x.htm.
+          */
         }));
 
         setAllPosts(mapped); // lưu vào state
@@ -107,15 +107,15 @@ Kết quả cuối cùng là một URL hoàn chỉnh và chính xác: http://loc
   useEffect(() => {
     const foundPost = allPosts.find((p) => String(p.id) === id);
     setPost(foundPost);
-  }, [id,allPosts]);
+  }, [id, allPosts]);
   //[id, allPosts] → cập nhật khi có dữ liệu mới và khi đổi id.
   //Khi id thay đổi → chạy lại useEffect.
-// Khi allPosts thay đổi (do fetch API thành công) → cũng chạy lại useEffect.
-// lần đầu render, allPosts mặc định là [] → find sẽ trả về undefined.
+  // Khi allPosts thay đổi (do fetch API thành công) → cũng chạy lại useEffect.
+  // lần đầu render, allPosts mặc định là [] → find sẽ trả về undefined.
 
-// Sau khi fetch API xong, bạn setAllPosts(mapped) → state allPosts thay đổi.
+  // Sau khi fetch API xong, bạn setAllPosts(mapped) → state allPosts thay đổi.
 
-// Nếu dependency array chỉ có [id], thì useEffect không chạy lại khi allPosts đổi. Kết quả là post mãi bằng undefined.
+  // Nếu dependency array chỉ có [id], thì useEffect không chạy lại khi allPosts đổi. Kết quả là post mãi bằng undefined.
   if (!post) {
     return <Container>Bài viết không tồn tại!</Container>;
   }
@@ -126,9 +126,7 @@ Kết quả cuối cùng là một URL hoàn chỉnh và chính xác: http://loc
       {post.description && <Description>{post.description}</Description>}
       {post.content &&
         <IframeWrapper>
-          <Iframe1 src={post.content}/>
-          
-         
+          <Iframe1 src={post.content} />
         </IframeWrapper>
       }
     </Container >

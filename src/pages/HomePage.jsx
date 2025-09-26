@@ -254,10 +254,10 @@ const HomePage = ({ isDarkMode, setIsDarkMode }) => {
         const mapped = data.map((x) => ({
           id: x.id ?? "unk",
           title: x.title ?? "unk",
-          image: `${apiUrl.split('/api')[0]}/uploads/${x.image}`,
+          image: `${apiUrl.split('/api')[0]}/FileHtml/${x.id}`,
           description: x.description ?? "unk",
           releaseDate: x.releaseDate ?? "unk",
-          content: `${apiUrl.split('/api')[0]}/uploads/${x.content}`,
+          content: `${apiUrl.split('/posts')[0]}/FileHtml/${x.id}.html`,
           view: x.view ?? 0,
         }));
 

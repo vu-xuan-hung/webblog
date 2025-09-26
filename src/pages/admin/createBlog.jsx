@@ -4,12 +4,11 @@ import FileUploader from "./UpLoad";
 import { useState } from "react";
 
 function CreateBlog() {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [imageFile, setImageFile] = useState(null);
+    const [istitle, setTitle] = useState("");
+    const [isdescription, setDescription] = useState("");
+    const [imageFile, setImageFile] = useState([]);
     const [htmlFile, setHtmlFile] = useState(null);
     const apiUrl = import.meta.env.VITE_FILE_ALL_CONTENT;
-
     const apiUrl1 = import.meta.env.VITE_FILE_ALL_CONTENT_HTML;
     const apiUrl2 = import.meta.env.VITE_FILE_ALL_CONTENT_FOLDER;
 
@@ -21,26 +20,29 @@ function CreateBlog() {
 
     const handleImageFile = (files) => {
         if (files && files.length > 0) {
-            setImageFile(files[0]);
+            setImageFile(Array.from(files)); // ép FileList -> array
         }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         // title, description, releaseDate
-        const formDataBase = new FormData();
-        formDataBase.append("title", title);
-        formDataBase.append("description", description);
-        formDataBase.append("releaseDate", new Date().toISOString());
-        formDataBase.append("views", 0);
-
+        const formDataBase = {
+            title: istitle ?? "unk",
+            description: isdescription ?? "unk",
+            releaseDate: new Date().toISOString(),
+            views: 0,
+        }
         try {
             const res = await fetch(apiUrl, {
                 method: "POST",
-                body: formDataBase,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formDataBase),
             });
-            const data = await res.json();
-            console.log(" blog created:", data);
+            console.log("da gui api ", apiUrl);
+
         } catch (error) {
             console.error("Error :", error);
         }
@@ -55,25 +57,26 @@ function CreateBlog() {
                     method: "POST",
                     body: formDataHtml,
                 });
-                const dataHtml = await resHtml.json();
-                console.log("HTML :", dataHtml);
+                console.log("da gui api1 ", apiUrl1);
             } catch (error) {
                 console.error("Error ", error);
             }
         }
 
         // folder Image
-        if (imageFile) {
+        if (imageFile && imageFile.length > 0) {
             const formDataImage = new FormData();
-            formDataImage.append("files", imageFile);
 
+            for (const file of imageFile) {
+                formDataImage.append('files', file); // Sử dụng cùng một key "files"
+            }
             try {
                 const resImg = await fetch(apiUrl2, {
                     method: "POST",
                     body: formDataImage,
                 });
-                const dataImg = await resImg.json();
-                console.log("Image :", dataImg);
+
+                console.log("da gui api2 ", apiUrl2);
             } catch (error) {
                 console.error("Error", error);
             }
@@ -110,13 +113,13 @@ function CreateBlog() {
                         type="text"
                         placeholder="Blog Title"
                         className="border p-2 w-full rounded"
-                        value={title}
+                        value={istitle}
                         onChange={(e) => setTitle(e.target.value)}
                     />
                     <textarea
                         placeholder="Blog description"
                         className="border p-2 w-full rounded h-40"
-                        value={description}
+                        value={isdescription}
                         onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
 

@@ -50,7 +50,22 @@ const Header = ({ isDarkMode, toggleDarkMode }) => {
     return (
         <header className={styles.header}>
             <div className={styles.logo}>
-
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 512 512"
+                    width="40"
+                    height="40"
+                >
+                    {/* Tam giác bất khả thi (Penrose triangle style) */}
+                    <path
+                        d="M256 20L492 436H372L256 236L140 436H20L256 20Z"
+                        fill="black"
+                    />
+                    <path
+                        d="M372 436L256 236L140 436H372Z"
+                        fill="white"
+                    />
+                </svg>
                 <span className={styles.logoText}>khaicube</span>
             </div>
             <nav className={styles.nav}>
@@ -58,8 +73,7 @@ const Header = ({ isDarkMode, toggleDarkMode }) => {
                 <li><Link to="/" className={styles.navLink}>Home</Link></li>
                 <li><Link to="/blog" className={styles.navLink}>Blog</Link></li>
                 <li><Link to="/contact" className={styles.navLink}>Contact</Link></li>
-                <li>  <Link to="/aplicate" className={styles.navLink}>Aplicate</Link>
-                </li>
+
             </nav>
             <SearchBar />
 
@@ -67,7 +81,7 @@ const Header = ({ isDarkMode, toggleDarkMode }) => {
                 checked={isDarkMode}
                 onChange={toggleDarkMode}
             />
-        </header>
+        </header >
     );
 };
 
