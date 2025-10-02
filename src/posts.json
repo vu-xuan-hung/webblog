@@ -1,23 +1,26 @@
-[
-  {
-    "id": 1,
-    "title": "Hello World",
-    "description": "Đây là một bài viết mẫu",
-    "releaseDate": "22/03/2006",
-    "view": 70
-  },
-  {
-    "id": 2,
-    "title": "Hello World",
-    "description": "Đây là một bài viết mẫu",
-    "releaseDate": "22/03/2006",
-    "view": 70
-  },
-  {
-    "id": 3,
-    "title": "Hello World",
-    "description": "Đây là một bài viết mẫu",
-    "releaseDate": "22/03/2006",
-    "view": 70
-  }
-]
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Hello World",
+      "description": "Đây là một bài viết mẫu",
+      "releaseDate": "22/03/2006",
+      "view": 70
+    },
+    {
+      "id": 2,
+      "title": "Hello World",
+      "description": "Đây là một bài viết mẫu",
+      "releaseDate": "22/03/2006",
+      "view": 70,
+      "content": "/R.html"
+    },
+    {
+      "id": 3,
+      "title": "Hello World",
+      "description": "Đây là một bài viết mẫu",
+      "releaseDate": "22/03/2006",
+      "view": 70
+    }
+  ]
+}

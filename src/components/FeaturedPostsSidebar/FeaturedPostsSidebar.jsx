@@ -48,7 +48,7 @@ export default function FeaturedPostsSidebar({ posts, isDarkMode }) {
   return (
     <SidebarContainer
       style={{
-        backgroundColor: isDarkMode ? ' #c2edda' : '#fff',// màu nền khi dark/light
+        backgroundColor: isDarkMode ? ' #374151' : '#fff',// màu nền khi dark/light
         color: isDarkMode ? '#fff' : '#333',             // màu chữ khi dark/light
       }}
     >

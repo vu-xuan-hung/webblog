@@ -16,8 +16,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <ChakraProvider>
           <Routes>
             {/* Admin */}
-            <Route path="/admin/*" element={<App1 />} />
 
+            <Route path="/admin/*" element={<App1 />} />
             {/* Frontend */}
             <Route path="/*" element={<App />} />
           </Routes>

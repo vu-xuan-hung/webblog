@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-
 import PaginationLink from "../components/Pagination/PaginationK.jsx";
 import FeaturedPostsSidebar from "../components/FeaturedPostsSidebar/FeaturedPostsSidebar.jsx";
 
@@ -236,7 +235,7 @@ const PaginationContainer = styled.div`
   justify-content: center; 
   margin-top: 2rem; 
 `;
-const HomePage = ({ isDarkMode, setIsDarkMode }) => {
+const Blogs = ({ isDarkMode, setIsDarkMode }) => {
   const [allPosts, setAllPosts] = useState([]);
   const apiUrl = import.meta.env.VITE_FILE_ALL;
 
@@ -333,7 +332,7 @@ const HomePage = ({ isDarkMode, setIsDarkMode }) => {
         </PaginationContainer>
         <Search
           style={{
-            backgroundColor: isDarkMode ? ' #c2edda' : '#fff',// màu nền khi dark/light
+            backgroundColor: isDarkMode ? ' #374151' : '#fff',// màu nền khi dark/light
             color: isDarkMode ? '#fff' : '#333',             // màu chữ khi dark/light
           }}>
           <input
@@ -363,4 +362,4 @@ const HomePage = ({ isDarkMode, setIsDarkMode }) => {
   );
 };
 
-export default HomePage;
+export default Blogs;

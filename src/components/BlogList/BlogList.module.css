@@ -6,14 +6,15 @@
   margin-left: 110px;
 }
 
-.loader {
-  text-align: center;
-  padding: 1rem;
-  color: gray;
-  font-weight: bold;
-}
+
 .xd {
   display: grid;
   grid-template-columns: 250px 250px 250px; /* 3 cột */
   gap: 4.5rem; /* khoảng cách giữa các card */
+}
+.loader {
+ 
+  margin-top: 60px;
+  margin-left:380px;
+ 
 }

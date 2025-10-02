@@ -1,0 +1,101 @@
+
+
+.profileContainer {
+    
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+    padding: 10px;
+    display: grid;
+   gap: 40px; /* khoảng cách giữa 2 Card */
+ grid-template-columns: repeat(2, auto)
+ 
+}
+.Card{
+    
+ width: 350px;      
+  height: 250px; 
+  
+overflow: -moz-hidden-unscrollable;
+  
+}
+.profileCard {
+    /* Thẻ Profile */
+    padding: 60px;
+    border-radius: 10px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+                0 4px 6px -2px rgba(0, 0, 0, 0.05);
+   
+    max-width: 600px;
+    text-align: center;
+    
+    background-color: #f1f1f1; /* Màu nền Light Mode */
+    transition: background-color 0.3s;
+}
+
+/* Dark Mode styles (Sử dụng selector composition để áp dụng style) */
+/* Selector này chỉ hoạt động nếu component App1 (cha) quản lý Dark Mode qua body[data-theme="dark"] */
+:global(body[data-theme="dark"]) .profileCard {
+    /* Dùng :global để tham chiếu đến selector trên thẻ <body> */
+    background-color: #374151;
+}
+
+
+/* ========================================= */
+/* THÔNG TIN & THÀNH PHẦN */
+/* ========================================= */
+
+.avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: cover;
+    border: 4px solid #3b82f6;
+}
+
+.profileName {
+    margin-top: 16px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333333; /* Light Mode */
+}
+
+:global(body[data-theme="dark"]) .profileName {
+    color: #4778da; /* Dark Mode */
+}
+
+.profileRole, .profileEmail, .totalBlogs {
+    color: #6b7280; /* Light Mode */
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+:global(body[data-theme="dark"]) .profileRole,
+:global(body[data-theme="dark"]) .profileEmail,
+:global(body[data-theme="dark"]) .totalBlogs {
+    color: #9ca3af; /* Dark Mode */
+}
+
+.totalBlogs span {
+    color: #3b82f6;
+    margin-left: 5px;
+    font-weight: 700;
+}
+
+.logoutButton {
+    padding: 8px 16px;
+    background-color: #dc2626;
+    color: white;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: background-color 0.2s;
+    
+}
+
+.logoutButton:hover {
+    background-color: #b91c1c;
+}

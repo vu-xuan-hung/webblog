@@ -17,35 +17,113 @@ import { styled } from '@mui/material/styles';
 import useLocalStorage from "use-local-storage";
 import React, { useState, useEffect } from "react";
 
+const styles = {
+    dashboard: {
+        fontFamily: 'Arial, sans-serif',
+        padding: '20px',
+        backgroundColor: '#f0f2f5',
+        alignItems: 'center',
+    },
+    details: {
+        lineHeight: '1.5',
+    },
+    name: {
+        margin: '0',
+        fontSize: '1.5em',
+    },
+    text: {
+        margin: '0',
+    },
+    totalBlogs: {
+        fontWeight: 'bold',
+    },
+    actions: {
+        display: 'flex',
+    },
+
+
+    separator: {
+        border: '0',
+        borderTop: '1px solid #ccc',
+        margin: '20px 0',
+    },
+
+    blogTableContainer: {
+
+        marginTop: '20px',
+        backgroundColor: 'white',
+        borderRadius: '10px',
+        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+
+    },
+    table: {
+        width: '100%',
+        borderCollapse: 'collapse',
+    },
+    tableHeader: {
+        backgroundColor: '#34495e',
+        color: 'white',
+        alignItems: 'left'
+    },
+    th: {
+        padding: '15px',
+        textAlign: 'left',
+
+    },
+    td: {
+        padding: '15px',
+        borderBottom: '1px solid #ddd',
+        margin: 'auto',
+        textAlign: 'left',
+        overflow: 'hidden'
+    },
+    blogThumbnail: {
+        width: '50px',
+        height: '30px',
+        objectFit: 'cover',
+        borderRadius: '2px',
+        overflow: 'hidden'
+    },
+    deleteBtn: {
+        backgroundColor: '#e74c3c',
+        color: 'white',
+        border: 'none',
+        padding: '8px 12px',
+        borderRadius: '5px',
+        cursor: 'pointer',
+    },
+};
+{/* <Route> (có path và element). */ }
+{/* <Link> chỉ để chuyển trang, nó chỉ cần to="/...". */ }
 function App1() {
     const navigate = useNavigate();
     const preference = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const [isDarkMode, setIsDarkMode] = useLocalStorage("isDark", preference);
-  
-    const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
-     const [blogs, setBlogs] = useState([]);
-const [isCount, setIsCount] = useState(0);
-const [isCountV, setIsCountV] = useState(0);
 
-const mainBlogPosts = blogs.filter(post => post.tag !== "Featured");
-  const apiUrl= import.meta.env.VITE_FILE_ALL;
-useEffect(() => {
-  async function count() {
-    const res = await fetch(apiUrl);
-    const data = await res.json();
-    let views = 0;
-    for (let i of data) {
-      views += i.view;
-    }
-    setIsCountV(views);
-    setIsCount(data.length);
-    setBlogs(data);
-  }
-  count();
-}, [apiUrl]);
-     const handleDelete = async (idToDelete) => {
+    const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
+    const [blogs, setBlogs] = useState([]);
+    const [isCount, setIsCount] = useState(0);
+    const [isCountV, setIsCountV] = useState(0);
+
+    const mainBlogPosts = blogs.filter(post => post.tag !== "Featured");
+    const apiUrl = import.meta.env.VITE_FILE_ALL;
+    useEffect(() => {
+        async function count() {
+            const res = await fetch(apiUrl);
+            const data = await res.json();
+            let views = 0;
+            for (let i of data) {
+                views += i.view;
+            }
+            setIsCountV(views);
+            setIsCount(data.length);
+            setBlogs(data);
+        }
+        count();
+    }, [apiUrl]);
+    const handleDelete = async (idToDelete) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/blogs/${idToDelete}`, {
+            const res = await fetch(`${apiUrl.split('/api'[0])}/delete/${idToDelete}}`, {
                 method: "DELETE",
             });
             if (res.ok) {
@@ -58,9 +136,9 @@ useEffect(() => {
             alert("Lỗi kết nối server");
         }
     };
-   
-  
-  
+
+
+
     useEffect(() => {
         document.body.setAttribute("data-theme", isDarkMode ? "dark" : "light");
     }, [isDarkMode]);
@@ -69,6 +147,7 @@ useEffect(() => {
         localStorage.removeItem("expiry");
         navigate("/admin/adminLogin");
     };
+
     const ThemeSwitch = styled(Switch)(({ theme }) => ({
         width: 56,
         height: 36,
@@ -112,7 +191,7 @@ useEffect(() => {
         <>
 
             <div className="container">
-         
+
                 <div className="k"
                 >
                     <div className="card"
@@ -125,7 +204,7 @@ useEffect(() => {
                         }}>
                         <PeopleIcon />
                         <p>Total Views</p>
-                    <h3>{isCountV}</h3>
+                        <h3>{isCountV}</h3>
                     </div>
                 </div>
                 <div className="k">
@@ -172,7 +251,7 @@ useEffect(() => {
                 </div>
             </div>
             {/* Phần bảng danh sách blog */}
-            <div style={{...styles.blogTableContainer, fontWeight: 'bold',}}>
+            <div style={{ ...styles.blogTableContainer, fontWeight: 'bold', }}>
                 <table style={styles.table}>
                     <thead style={styles.tableHeader}>
                         <tr>
@@ -184,9 +263,10 @@ useEffect(() => {
                         </tr>
                     </thead>
                     <tbody
-                style={{backgroundColor: isDarkMode ? '#c2edda' : '#fff', // màu nền khi dark/light
+                        style={{
+                            backgroundColor: isDarkMode ? '#c2edda' : '#fff', // màu nền khi dark/light
                             color: isDarkMode ? '#333' : '#333',             // màu chữ khi dark/light
-                            }}
+                        }}
                     >
                         {mainBlogPosts.map((post, index) => (
 
@@ -209,15 +289,18 @@ useEffect(() => {
                     </tbody>
                 </table>
             </div>
-            
+
         </>
     );
 
     return (
 
-       <>
+        <div>
             {/* Sidebar */}
-            <div className="sidebar">
+            <div className="sidebar"
+                style={{
+                    backgroundColor: isDarkMode ? '#1093d5' : '#1877f2'
+                }}>
                 <ul>
                     <li>
                         <Link to="/admin/createBlog">
@@ -238,14 +321,15 @@ useEffect(() => {
                         </Link>
                     </li>
                     <li>
+
                         <Link to="/admin">
                             <DashboardIcon />
                             <span>Dashboard</span>
                         </Link>
                     </li>
 
-                    <div class="toggle-switch">
-                        <div class="toggle-slider"></div>
+                    <div className="toggle-switch">
+                        <div className="toggle-slider"></div>
                     </div>
 
                     <div style={{
@@ -276,6 +360,8 @@ useEffect(() => {
                             checked={isDarkMode}
                             onChange={toggleDarkMode}
                         />
+
+
                     </div>
 
 
@@ -289,7 +375,7 @@ useEffect(() => {
                         path="createBlog"
                         element={
                             <PrivateRoute>
-                                <CreateBlog />
+                                <CreateBlog isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
                             </PrivateRoute>
                         }
                     />
@@ -313,86 +399,8 @@ useEffect(() => {
                     <Route path="admin" element={<Dashboard />} />
                 </Routes>
             </div >
-        </>
+        </div>
     );
 }
 
 export default App1;
-const styles = {
-    dashboard: {
-        fontFamily: 'Arial, sans-serif',
-        padding: '20px',
-        backgroundColor: '#f0f2f5',
-        alignItems:'center',
-    },
-    details: {
-        lineHeight: '1.5',
-    },
-    name: {
-        margin: '0',
-        fontSize: '1.5em',
-    },
-    text: {
-        margin: '0',
-    },
-    totalBlogs: {
-        fontWeight: 'bold',
-    },
-    actions: {
-        display: 'flex',
-    },
-  
- 
-    separator: {
-        border: '0',
-        borderTop: '1px solid #ccc',
-        margin: '20px 0',
-    },
-  
-    blogTableContainer: {
-        
-        marginTop: '20px',
-        backgroundColor: 'white',
-        borderRadius: '10px',
-        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-
-    },
-    table: {
-            width: '100%',
-        borderCollapse: 'collapse',
-    },
-    tableHeader: {
-        backgroundColor: '#34495e',
-        color: 'white',
-        alignItems: 'left'
-    },
-    th: {
-        padding: '15px',
-        textAlign: 'left',
-
-    },
-    td: {
-        padding: '15px',
-        borderBottom: '1px solid #ddd',
-        margin: 'auto',
-        textAlign: 'left',
-        overflow: 'hidden'
-    },
-    blogThumbnail: {
-        width: '50px',
-        height: '30px',
-        objectFit: 'cover',
-        borderRadius: '2px',
-        overflow: 'hidden'
-    },
-    deleteBtn: {
-        backgroundColor: '#e74c3c',
-        color: 'white',
-        border: 'none',
-        padding: '8px 12px',
-        borderRadius: '5px',
-        cursor: 'pointer',
-    },
-};
-{/* <Route> (có path và element). */ }
-{/* <Link> chỉ để chuyển trang, nó chỉ cần to="/...". */ }

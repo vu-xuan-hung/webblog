@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import BlogPostCard from "../BlogPostCard/BlogPostCard";
 import styles from "./BlogList.module.css";
-
+import { ClimbingBoxLoader } from "react-spinners"
 
 export default function BlogList() {
 
@@ -10,8 +10,9 @@ export default function BlogList() {
     const [visiblePosts, setVisiblePosts] = useState([]);
     const [page, setPage] = useState(1);
     const loader = useRef(null);
-    const apiUrl =  import.meta.env.VITE_FILE_ALL;
+    const apiUrl = import.meta.env.VITE_FILE_ALL;
     const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         async function fetchPosts() {
             try {
@@ -20,16 +21,19 @@ export default function BlogList() {
                 const mapped = data.map((x) => ({
                     id: x.id ?? "unk",
                     title: x.title ?? "unk",
-                    image:`${apiUrl.split('/api')[0]}/uploads/${x.image}`,
+                    image: `${apiUrl.split('/api')[0]}/uploads/${x.image}`,
                     description: x.description ?? "unk",
                     releaseDate: x.releaseDate ?? "unk",
                     content: `${apiUrl.split('/api')[0]}/uploads/${x.content}`,
                 }));
 
                 setPosts(mapped); // lưu vào state
+                setLoading(false);
             } catch (err) {
                 console.error("Lỗi fetch API:", err);
+
             }
+
         }
 
         fetchPosts();
@@ -69,14 +73,16 @@ export default function BlogList() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.xd}>
-                {visiblePosts.map((post) => (
-                    <BlogPostCard key={post.id} post={post} />//cac bai viet
-                ))}
-            </div>
-            <div ref={loader} className={styles.loader}>
-                Đang tải thêm...
-            </div>
+            {loading ? <ClimbingBoxLoader size='20px' color="var(--primary-text-color)" className={styles.loader} /> :
+                <div className={styles.xd}>
+
+                    {visiblePosts.map((post) => (
+                        <BlogPostCard key={post.id} post={post} />//cac bai viet
+                    ))}
+                </div>
+            }
+
+
         </div>
     );
 }

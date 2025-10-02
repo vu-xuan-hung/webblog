@@ -7,7 +7,7 @@
   color: rgb(46, 191, 46);
   font-weight: 500;
  
-;}
+}
 .container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);  
@@ -67,7 +67,7 @@
   left: 0; /*npmcho ve trai han  */
   width: 70px;
   height: 100vh;
-  background-color: #1877f2;
+  
   padding: 20px 10px;
   overflow: hidden;
   border-radius: 0 10px 10px 0;
@@ -102,7 +102,18 @@
 .sidebar li:last-child {
    margin-top: auto; /*Tự động chiếm hết khoảng trống còn lại phía trên */
 }
+/* Ví dụ trong App1.css (hoặc CSS/Tailwind của bạn) */
+.main-layout {
+    display: flex; /* Bắt buộc có để đặt Sidebar và Content cạnh nhau */
+    min-height: 100vh;
+}
 
+
+/* Div chứa Routes cần chiếm không gian còn lại */
+.content-area { 
+    flex-grow: 1; /* Quan trọng: Cho phép nó chiếm phần còn lại */
+    padding: 20px; /* Thêm padding nếu cần */
+}
 /* .sidebar li {
   
   display: flex;

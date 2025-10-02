@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import StaticHtmlPage from "./StaticHtmlPage";
-
+import { ClimbingBoxLoader } from "react-spinners"
 const Container = styled.div`
   
   margin: 2rem auto;
@@ -30,7 +30,6 @@ const Description = styled.div`
   text-align: center;
   color:var(--primary-text-color)
 `;
-// eslint-disable-next-line no-unused-vars
 const IframeWrapper = styled.div`
   position: relative;
   width: 100%;
@@ -48,7 +47,7 @@ const Iframe1 = styled.iframe`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   border: none;
 `;
 
@@ -58,7 +57,7 @@ export default function PostDetail() {
   const [post, setPost] = useState(null);
   const [allPosts, setAllPosts] = useState([]);
   const apiUrl = import.meta.env.VITE_FILE_ALL;
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     //khai báo một hàm bất đồng bộ
     //Khi một hàm có async, nó sẽ luôn trả về một Promise.
@@ -100,6 +99,9 @@ export default function PostDetail() {
       } catch (err) {
         console.error("Lỗi fetch API:", err);
       }
+      finally {
+        setLoading(false);
+      }
     }
 
     fetchPosts();
@@ -126,7 +128,12 @@ export default function PostDetail() {
       {post.description && <Description>{post.description}</Description>}
       {post.content &&
         <IframeWrapper>
-          <Iframe1 src={post.content} />
+          {
+            loading ? <ClimbingBoxLoader /> : <Iframe1
+              src={post.content}
+            />
+          }
+
         </IframeWrapper>
       }
     </Container >

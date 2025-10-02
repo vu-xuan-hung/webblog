@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import styled from "styled-components";
 
@@ -42,7 +43,7 @@ const PaginationLink = ({ totalPages, onPageChange, currentPage, isDarkMode, set
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
                 style={{
-                    backgroundColor: isDarkMode ? ' #c2edda' : '#fff',// màu nền khi dark/light
+                    backgroundColor: isDarkMode ? ' #374151' : '#81C784',// màu nền khi dark/light
                     color: isDarkMode ? '#fff' : '#333',             // màu chữ khi dark/light
                 }}
             >
@@ -63,7 +64,7 @@ const PaginationLink = ({ totalPages, onPageChange, currentPage, isDarkMode, set
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
                 style={{
-                    backgroundColor: isDarkMode ? ' #c2edda' : '#fff',// màu nền khi dark/light
+                    backgroundColor: isDarkMode ? ' #374151' : '#81C784',// màu nền khi dark/light
                     color: isDarkMode ? '#fff' : '#333',             // màu chữ khi dark/light
                 }}
             >
