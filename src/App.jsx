@@ -33,7 +33,7 @@ function App() {
     document.body.setAttribute("data-theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
   return (
-    <div className="body">
+    <>
       <Navbar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
 
       <ToastContainer position="bottom-right" autoClose={3000} />
@@ -81,7 +81,7 @@ function App() {
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
-    </div>
+    </>
   );
 }
 

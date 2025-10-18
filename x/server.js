@@ -68,8 +68,7 @@ app.post(
   async (req, res) => {
     try {
       const { title, description } = req.body; // <-- giờ req.body sẽ có do Multer parse
-      const blogs = await readBlogs();
-
+      let blogs = await readBlogs();
       const maxId = blogs.reduce((max, blog) => Math.max(max, blog.id), 0);
       const newBlog = {
         id: maxId + 1,
@@ -80,7 +79,7 @@ app.post(
         releaseDate: new Date().toLocaleDateString("vi-VN"),
       };
 
-      blogs.unshift(newBlog);
+      blogs = [...blogs, newBlog];
       await writeBlogs(blogs);
 
       res.json({ message: "Blog added successfully!", blog: newBlog });
@@ -101,10 +100,10 @@ app.delete("/api/blogs/:id", async (req, res) => {
     if (index === -1)
       return res.status(404).json({ error: "Blog không tồn tại" });
 
-    const deletedBlog = blogs.splice(index, 1)[0];
-    await writeBlogs(blogs);
+    const newBlog = blogs.filter(bl => bl.id != id)
+    await writeBlogs(newBlog);
 
-    res.json({ message: "Blog deleted successfully", blog: deletedBlog });
+    res.json({ message: "Blog deleted successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Không thể xóa blog" });
