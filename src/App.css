@@ -12,15 +12,61 @@
 
 [data-theme="dark"] {
   /* Dark theme */
-  --background-color: rgba(255, 145, 145, 0.95);
+  --background-color: rgb(34, 33, 33);
   --foreground-color: #5a95ff;
   --primary-text-color: #1877f2;
   --secondary-text-color: #917676;
   --accent-color: #1771f8;
   --accent-hover: #5a95ff;
 }
+html, body{
+  height: 100%;
+  
+}
+.body{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.content{
+  flex: 1 0 auto;
+}
+.footer {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  color: #f1f5f9;
+  padding: 5px 20px;
+  text-align: center;
+  border-radius: 6px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  font-family: "Poppins", sans-serif;
+}
 
+.footer-content p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
 
+.social a {
+  color: #94a3b8;
+  text-decoration: none;
+  margin: 0 10px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.social a:hover {
+  color: #38bdf8;
+  transform: scale(1.1);
+}
+
+.copyright {
+  border-top: 1px solid #334155;
+  margin-top: 20px;
+  padding-top: 10px;
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
 
 
 /* Root wrapper */
@@ -28,7 +74,6 @@
   width: 100%;
   height: 100%;
   text-align: center;
-  
 }
 
 /* App container */
@@ -37,7 +82,9 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: var(--background-color);
+  background: none !important;
+  position: relative;
+  z-index: 10; /* để nội dung nằm trên Squares */
 }
 
 /* Hero section */

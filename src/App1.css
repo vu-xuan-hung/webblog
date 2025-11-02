@@ -67,8 +67,7 @@
   left: 0; /*npmcho ve trai han  */
   width: 70px;
   height: 100vh;
-  
-  padding: 20px 10px;
+  padding: 2.5% 1% ;
   overflow: hidden;
   border-radius: 0 10px 10px 0;
   transition: width 0.3s ease;

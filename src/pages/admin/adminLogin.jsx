@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // thêm cái này
 import styles from "./adminLogin.module.css"
+import Galaxy from '../../components/Galaxy/Galaxy';
+import { Dice1 } from 'lucide-react';
 const Loginad = ({ isDarkMode, setIsDarkMode }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -49,68 +51,89 @@ const Loginad = ({ isDarkMode, setIsDarkMode }) => {
 
 
     return (
-        <div className={styles.logincontainer}
-        >
-            <div className={styles.logincard}
+        <>
+            <div
                 style={{
-                    backgroundColor: isDarkMode ? ' #c2edda' : '#fff',// màu nền khi dark/light
-                    color: isDarkMode ? '#fff' : '#333',             // màu chữ khi dark/light
-                }} >
-                <div className={styles.loginheader}>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className={styles.loginicon}
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                    >
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c2.49 0 4.5 2.01 4.5 4.5S14.49 14 12 14s-4.5-2.01-4.5-4.5S9.51 5 12 5zm0 14.4c-2.7 0-5.83-1.63-7.5-3.66 1.67-2.03 4.8-3.66 7.5-3.66s5.83 1.63 7.5 3.66c-1.67 2.03-4.8 3.66-7.5 3.66z" />
-                    </svg>
-                    <h1 className={styles.logintitle}>Admin Login</h1>
+                    width: '100%',
+                    height: '100vh', // đảm bảo chiếm toàn màn hình
+                    justifyContent: 'center',
+                    display: 'flex',
+                    alignItems: 'center',
+                    overflow: 'hidden',
+                }}// display +... để cho 2 cái ở giữa
+            >
+                <div style={{
+                    width: '100vw',
+                    height: '100vh',
+                    position: 'absolute',
+                    zIndex: 1, // nằm dưới form
+                }}>
+                    {isDarkMode && <Galaxy />}
                 </div>
-                <form onSubmit={handleLogin} className={styles.loginform}>
-                    <div style={{
 
-                        color: isDarkMode ? '#333' : '#333',             // màu chữ khi dark/light
-                    }}>
-                        <input
-                            id="email"
-                            type="email"
-                            required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Email"
-                            className={styles.logininput}
+                <div className={styles.logincard}
+                    style={{
+                        backgroundColor: isDarkMode ? ' #c2edda' : '#fff',// màu nền khi dark/light
+                        color: isDarkMode ? '#fff' : '#333',             // màu chữ khi dark/light
+                        zIndex: 10,
+                    }} >
+                    <div className={styles.loginheader}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className={styles.loginicon}
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                        >
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c2.49 0 4.5 2.01 4.5 4.5S14.49 14 12 14s-4.5-2.01-4.5-4.5S9.51 5 12 5zm0 14.4c-2.7 0-5.83-1.63-7.5-3.66 1.67-2.03 4.8-3.66 7.5-3.66s5.83 1.63 7.5 3.66c-1.67 2.03-4.8 3.66-7.5 3.66z" />
+                        </svg>
+                        <h1 className={styles.logintitle}>Admin Login</h1>
+                    </div>
+                    <form onSubmit={handleLogin} className={styles.loginform}>
+                        <div style={{
 
-                        />
-                    </div>
-                    <div style={{
+                            color: isDarkMode ? '#333' : '#333',             // màu chữ khi dark/light
+                        }}>
+                            <input
+                                id="email"
+                                type="email"
+                                required
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Email"
+                                className={styles.logininput}
 
-                        color: isDarkMode ? '#333' : '#333',             // màu chữ khi dark/light
-                    }}>
-                        <input
-                            id="password"
-                            type="password"
-                            required
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Mật khẩu"
-                            className={styles.logininput}
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className={styles.loginbutton}
-                    >
-                        Đăng nhập
-                    </button>
-                </form>
-                {message && (
-                    <div className={`${styles.messagebox} ${messageType === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                        {message}
-                    </div>
-                )}
+                            />
+                        </div>
+                        <div style={{
+
+                            color: isDarkMode ? '#333' : '#333',             // màu chữ khi dark/light
+                        }}>
+                            <input
+                                id="password"
+                                type="password"
+                                required
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Mật khẩu"
+                                className={styles.logininput}
+                            />
+                        </div>
+                        <button
+                            type="submit"
+                            className={styles.loginbutton}
+                        >
+                            Đăng nhập
+                        </button>
+                    </form>
+                    {message && (
+                        <div className={`${styles.messagebox} ${messageType === 'success' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                            {message}
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
+
+        </>
     );
 };
 

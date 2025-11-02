@@ -16,7 +16,7 @@ import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import useLocalStorage from "use-local-storage";
 import React, { useState, useEffect } from "react";
-
+import Orb from "./components/Orb/Orb.jsx";
 const styles = {
     dashboard: {
         fontFamily: 'Arial, sans-serif',
@@ -192,8 +192,7 @@ function App1() {
 
             <div className="container">
 
-                <div className="k"
-                >
+                <div className="k">
                     <div className="card"
                         style={{
                             backgroundColor: isDarkMode ? '#b4991f' : '#fff', // màu nền khi dark/light
@@ -295,11 +294,15 @@ function App1() {
 
     return (
 
-        <div>
+        <>
+
             {/* Sidebar */}
             <div className="sidebar"
                 style={{
-                    backgroundColor: isDarkMode ? '#1093d5' : '#1877f2'
+                    backgroundColor: isDarkMode ? '#1093d5' : '#1877f2',
+
+                    zIndex: 2, // nằm dưới form
+
                 }}>
                 <ul>
                     <li>
@@ -336,6 +339,7 @@ function App1() {
                         display: "grid",
                         marginTop: "auto",
                     }}>
+
                         <li>
                             <button
                                 onClick={handleLogout}
@@ -370,6 +374,7 @@ function App1() {
 
             {/* Content */}
             < div className="content" >
+
                 <Routes>
                     <Route
                         path="createBlog"
@@ -384,8 +389,14 @@ function App1() {
                         path="profile"
                         element={
                             <PrivateRoute>
-                                <AdminProfile isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
-                                {/* truyen props */}
+
+
+                                <AdminProfile
+                                    isDarkMode={isDarkMode}
+                                    setIsDarkMode={setIsDarkMode}
+                                />
+
+
                             </PrivateRoute>
                         }
                     />
@@ -399,7 +410,7 @@ function App1() {
                     <Route path="admin" element={<Dashboard />} />
                 </Routes>
             </div >
-        </div>
+        </>
     );
 }
 

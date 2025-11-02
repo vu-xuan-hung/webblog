@@ -33,56 +33,79 @@ function App() {
     document.body.setAttribute("data-theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
   return (
-    <>
+    <div className="body">
+      {/* Nội dung App hiển thị trên nền */}
+
       <Navbar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
-
       <ToastContainer position="bottom-right" autoClose={3000} />
-
-      <Routes>
-        {/* Trang chủ */}
-        <Route
-          index
-          element={
-            <div className={`app ${isMobile ? "mobile" : isTablet ? "tablet" : "desktop"}`}>
-              <main className="main-content">
-                <section className="blog-section">
-                  <h3 className="section-title">Most Post</h3>
-                  <div className="blog-layout">
-                    <div className="blog-grid">
-                      <BlogList />
+      <div className="content">
+        <Routes>
+          {/* Trang chủ */}
+          <Route
+            index
+            element={
+              <div className={`app ${isMobile ? "mobile" : isTablet ? "tablet" : "desktop"}`}>
+                <main className="main-content">
+                  <section className="blog-section">
+                    <h3 className="section-title">Most Post</h3>
+                    <div className="blog-layout">
+                      <div className="blog-grid">
+                        <BlogList />
+                      </div>
+                      {!isMobile && (
+                        <aside className="featured-sidebar">
+                          <FeaturedPosts />
+                        </aside>
+                      )}
                     </div>
-                    {!isMobile &&
-                      <aside className="featured-sidebar">
-                        <FeaturedPosts />
-                      </aside>}
+                  </section>
+                </main>
+              </div>
+            }
+          />
+          <Route path="contact" element={<Contact isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />} />
+          <Route path="blog" element={<Blogs isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />} />
+          <Route path="post/:id" element={<PostDetail />} />
+          <Route path="search" element={<SearchResult />} />
+          <Route
+            path="aplicate"
+            element={
+              <iframe
+                src="/R.html"
+                style={{ width: "100%", height: "100vh", border: "none" }}
+                title="Cảnh"
+              />
+            }
+          />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
+      <div className="footer">
+        <div className="footer-content">
+          <p>
+            Hi! I'm <strong>Vũ Xuân Hùng</strong>, a Computer Science student at
+            Hanoi University of Industry.
+          </p>
 
-                  </div>
-                </section>
-              </main>
-            </div>
-          }
-        />
-        <Route path="contact" element={<Contact isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />} />
-        <Route path="blog" element={<Blogs isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />} />
-        <Route path="post/:id" element={<PostDetail />} />
-        <Route path="search" element={<SearchResult />} />
+          <div className="social">
+            <a href="https://www.facebook.com/vu.xuan.hung.883474" target="_blank">
+              <i className="fab fa-facebook"></i> Facebook
+            </a>
+            <a href="https://github.com/vu-xuan-hung" target="_blank">
+              <i className="fab fa-github"></i> GitHub
+            </a>
+          </div>
+        </div>
 
-        <Route
-          path="aplicate"
-          element={
-            <iframe
-              src="/R.html"
-              style={{ width: "100%", height: "100vh", border: "none" }}
-              title="Cảnh"
-            />
-          }
-        />
+        <div className="copyright">
+          <p>© 2025 Vũ Xuân Hùng. All rights reserved. | Designed & Developed by Hùng Vũ</p>
+        </div>
+      </div>
 
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
 
-    </>
+    </div>
   );
+
 }
 
 export default App;
