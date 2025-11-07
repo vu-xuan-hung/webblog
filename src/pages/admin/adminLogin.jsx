@@ -39,7 +39,7 @@ const Loginad = ({ isDarkMode, setIsDarkMode }) => {
 
             // Chuyển hướng sau 1 giây
             setTimeout(() => {
-                navigate('/admin/profile');
+                navigate('/admin');
             }, 1000);
 
         } else {
