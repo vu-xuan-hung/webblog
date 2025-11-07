@@ -106,7 +106,7 @@ function CreateBlog({ isDarkMode, setIsDarkMode }) {
             setImageFile(Array.from(files)); // ép FileList -> array
         }
     };
-
+    let newBlogEntry; // Biến để lưu blog mới (chứa ID)
     const handleSubmit = async (e) => {
         e.preventDefault();
         // title, description, releaseDate
@@ -125,19 +125,19 @@ function CreateBlog({ isDarkMode, setIsDarkMode }) {
                 body: JSON.stringify(formDataBase),
             });
             console.log("da gui api ", apiUrl);
-
+            newBlogEntry = await res.json();
         } catch (error) {
             console.error("Error :", error);
         }
-
+        const blogId = newBlogEntry.id;
         // file HTML
         if (htmlFile) {
             const formDataHtml = new FormData();
-            formDataHtml.append("file", htmlFile);
+            formDataHtml.append("htmlfile", htmlFile);
 
             try {
-                const resHtml = await fetch(apiUrl1, {
-                    method: "POST",
+                const resHtml = await fetch(`${apiUrl1}/${blogId}`, {
+                    method: "PATCH",
                     body: formDataHtml,
                 });
                 console.log("da gui api1 ", apiUrl1);
@@ -151,11 +151,11 @@ function CreateBlog({ isDarkMode, setIsDarkMode }) {
             const formDataImage = new FormData();
 
             for (const file of imageFile) {
-                formDataImage.append('files', file); // Sử dụng cùng một key "files"
+                formDataImage.append('image', file); // Sử dụng cùng một key "files"
             }
             try {
-                const resImg = await fetch(apiUrl2, {
-                    method: "POST",
+                const resImg = await fetch(`${apiUrl2}/${blogId}`, {
+                    method: "PATCH",
                     body: formDataImage,
                 });
 

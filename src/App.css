@@ -139,30 +139,28 @@ html, body{
 
 /* Blog layout */
 .blog-layout {
-  display: grid;
+  display: flex;
   grid-template-columns: 2fr 1fr;
-  gap: 40px;
-  align-items: start;
+  
 }
 
 .blog-section {
-  padding: 40px 0;
+  justify-self: center;
+  align-items: center;
 }
 
 .section-title {
   font-size: 36px;
   font-weight: 600;
-  margin-bottom: 40px;
-  margin-left:-680px;
   color: var(--primary-text-color);
 }
 
 /* Blog grid */
 .blog-grid {
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(3, 300px);
-  gap: 20px;
-  justify-content: start;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Sidebar */

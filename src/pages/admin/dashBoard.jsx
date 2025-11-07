@@ -1,4 +1,5 @@
-import React, { useState,useEffect } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from 'react';
 import postsData from "../../posts.json"
 import { Link, Router } from 'react-router-dom';
 import HomePage from '../HomePage';
@@ -24,20 +25,16 @@ const Dashboard = () => {
     // Hàm xử lý việc xóa một bài blog khỏi danh sách
     const handleDelete = async (idToDelete) => {
         try {
-            const res = await fetch(`http://localhost:3000/api/blogs/${idToDelete}`, {
+            const res = await fetch(`http://localhost:3000/blogs/${idToDelete}`, {
                 method: "DELETE",
             });
-            if (res.ok) {
-                setBlogs(prevBlogs => prevBlogs.filter(post => post.id !== idToDelete));
-            } else {
-                alert("Xóa thất bại!");
-            }
+
         } catch (err) {
             console.error(err);
             alert("Lỗi kết nối server");
         }
     };
-   
+
 
 
     // Hàm xử lý khi người dùng nhấn nút tạo ý tưởng blog

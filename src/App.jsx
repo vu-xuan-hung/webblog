@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Navbar from "./components/Nav/Navbar.jsx"
 import FeaturedPosts from "./components/FeaturedPosts/FeaturedPosts";
 import Blogs from "./pages/Blogs.jsx";
@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom'; import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-
+import Shuffle from "./components/Shuffle/Shuffle.jsx";
 import PostDetail from "./pages/PostDetail.jsx";
 import BlogList from "./components/BlogList/BlogList";
 import SearchResult from "./pages/SearchResult.jsx";
@@ -47,16 +47,24 @@ function App() {
               <div className={`app ${isMobile ? "mobile" : isTablet ? "tablet" : "desktop"}`}>
                 <main className="main-content">
                   <section className="blog-section">
-                    <h3 className="section-title">Most Post</h3>
+                    <h3 className="section-title">
+                      <Shuffle
+                        text="Most Post"
+                        shuffleDirection="right"
+                        duration={0.35}
+                        animationMode="evenodd"
+                        shuffleTimes={1}
+                        ease="power3.out"
+                        stagger={0.03}
+                        threshold={0.1}
+                        triggerOnce={true}
+                        triggerOnHover={true}
+                        respectReducedMotion={true}
+                      /></h3>
                     <div className="blog-layout">
                       <div className="blog-grid">
                         <BlogList />
                       </div>
-                      {!isMobile && (
-                        <aside className="featured-sidebar">
-                          <FeaturedPosts />
-                        </aside>
-                      )}
                     </div>
                   </section>
                 </main>

@@ -72,10 +72,10 @@ export default function PostDetail() {
         const mapped = data.map((x) => ({
           id: x.id ?? "unk",
           title: x.title ?? "unk",
-          image: `${apiUrl.split('/api')[0]}/FileHtml/${x.id}`,
+          image: `${apiUrl}/upload/${x.id}.png`,
           description: x.description ?? "unk",
           releaseDate: x.releaseDate ?? "unk",
-          content: `${apiUrl.split('/posts')[0]}/FileHtml/${x.id}.html`,
+          content: `${apiUrl}${x.content}`,
 
           /*           1. ${apiUrl.split('/api')[0]}
            Phần này lấy URL cơ sở (base URL) của API của bạn.

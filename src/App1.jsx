@@ -10,13 +10,11 @@ import PeopleIcon from "@mui/icons-material/People";
 import ArticleIcon from "@mui/icons-material/Article";
 import { useNavigate } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import AdminProfile from "./pages/admin/profile.jsx";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
 import useLocalStorage from "use-local-storage";
 import React, { useState, useEffect } from "react";
-import Orb from "./components/Orb/Orb.jsx";
 const styles = {
     dashboard: {
         fontFamily: 'Arial, sans-serif',
@@ -123,11 +121,13 @@ function App1() {
     }, [apiUrl]);
     const handleDelete = async (idToDelete) => {
         try {
-            const res = await fetch(`${apiUrl.split('/api'[0])}/delete/${idToDelete}}`, {
+            const res = await fetch(`${apiUrl}/${idToDelete}`, {
                 method: "DELETE",
             });
+
             if (res.ok) {
                 setBlogs(prevBlogs => prevBlogs.filter(post => post.id !== idToDelete));
+                setIsCount(blogs.length);
             } else {
                 alert("Xóa thất bại!");
             }
@@ -311,18 +311,7 @@ function App1() {
                             <span>Create Blog</span>
                         </Link>
                     </li>
-                    <li>
-                        <Link
-                            to={
-                                localStorage.getItem("adminToken")//nếu còn đn thì chọn cái 1
-                                    ? "/admin/profile"
-                                    : "/admin/adminLogin"
-                            }
-                        >
-                            <AdminPanelSettingsIcon />
-                            <span>Admin</span>
-                        </Link>
-                    </li>
+
                     <li>
 
                         <Link to="/admin">
@@ -384,23 +373,6 @@ function App1() {
                             </PrivateRoute>
                         }
                     />
-
-                    <Route
-                        path="profile"
-                        element={
-                            <PrivateRoute>
-
-
-                                <AdminProfile
-                                    isDarkMode={isDarkMode}
-                                    setIsDarkMode={setIsDarkMode}
-                                />
-
-
-                            </PrivateRoute>
-                        }
-                    />
-
                     <Route path="adminLogin" element={<Loginad isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />} />
                     <Route path="/" element={
                         <PrivateRoute>

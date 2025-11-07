@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // thêm cái này
 import styles from "./adminLogin.module.css"
-import Galaxy from '../../components/Galaxy/Galaxy';
-import { Dice1 } from 'lucide-react';
+
 const Loginad = ({ isDarkMode, setIsDarkMode }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -68,7 +67,7 @@ const Loginad = ({ isDarkMode, setIsDarkMode }) => {
                     position: 'absolute',
                     zIndex: 1, // nằm dưới form
                 }}>
-                    {isDarkMode && <Galaxy />}
+
                 </div>
 
                 <div className={styles.logincard}

@@ -20,11 +20,11 @@ const FeaturedPosts = () => {
                 const mapped = data.map((x) => ({
                     id: x.id ?? "unk",
                     title: x.title ?? "unk",
-                    image: `${apiUrl.split('/api')[0]}/uploads/${x.image}`,
+                    image: `${apiUrl.split('/api')[0]}/upload/${x.image}`,
                     description: x.description ?? "unk",
                     releaseDate: x.releaseDate ?? "unk",
                     view: x.view ?? 0,
-                    content: `${apiUrl.split('/api')[0]}/uploads/${x.content}`,
+                    content: `${apiUrl.split('/api')[0]}/upload/${x.content}`,
                 }));
 
                 setAllPostsn(mapped); // lưu vào state

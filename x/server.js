@@ -13,6 +13,7 @@ app.use(cors());
 // app.use(express.json());
 
 // Thư mục lưu file upload
+
 const uploadDir = path.resolve("./uploads");
 const postsPath = path.resolve("../src/posts.json");
 
@@ -43,7 +44,7 @@ const readBlogs = async () => {
     throw err;
   }
 };
-
+let dataBlogs = readBlogs();
 const writeBlogs = async (data) => {
   await fs.writeFile(postsPath, JSON.stringify(data, null, 2));
 };
@@ -53,8 +54,8 @@ const writeBlogs = async (data) => {
 // GET tất cả blog
 app.get("/api/blogs", async (req, res) => {
   try {
-    const blogs = await readBlogs();
-    res.json(blogs);
+
+    res.json(dataBlogs);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Không thể đọc dữ liệu blog" });

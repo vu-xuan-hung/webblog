@@ -1,6 +1,9 @@
 import ProfileCard from "../components/ProfileCard/ProfileCard";
 import Orb from "../components/Orb/Orb";
 
+
+
+
 const Contact = () => {
 
   return (
@@ -32,9 +35,9 @@ const Contact = () => {
           zIndex: 10,
         }}// absolute/fixed (z-index cao) để có thể chồng lên, không chiếm k gian
       >
+
         <ProfileCard
           name="Vu Xuan Hung"
-          title="Software Engineer"
           handle="vuxuanhung"
           status="Online"
           contactText="Contact Me"
@@ -43,8 +46,11 @@ const Contact = () => {
           showUserInfo={true}
           enableTilt={true}
           enableMobileTilt={true}
-          onContactClick={() => window.open("https://www.facebook.com/vu.xuan.hung.883474", "_blank")}
+          onContactClick={() =>
+            window.open("https://www.facebook.com/vu.xuan.hung.883474", "_blank")
+          }
         />
+
       </div>
     </div>
 

@@ -21,10 +21,10 @@ export default function BlogList() {
                 const mapped = data.map((x) => ({
                     id: x.id ?? "unk",
                     title: x.title ?? "unk",
-                    image: `${apiUrl.split('/api')[0]}/uploads/${x.image}`,
+                    image: `${apiUrl}${x.image}`,
                     description: x.description ?? "unk",
                     releaseDate: x.releaseDate ?? "unk",
-                    content: `${apiUrl.split('/api')[0]}/uploads/${x.content}`,
+                    content: `${apiUrl}${x.content}`,
                 }));
 
                 setPosts(mapped); // lưu vào state
