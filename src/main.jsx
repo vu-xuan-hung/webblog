@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-
+import "./index.css"
 import App from "./App";     // frontend
 import App1 from "./App1";   // admin
 
@@ -16,7 +16,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <ChakraProvider>
           <Routes>
             {/* Admin */}
-
             <Route path="/admin/*" element={<App1 />} />
             {/* Frontend */}
             <Route path="/*" element={<App />} />

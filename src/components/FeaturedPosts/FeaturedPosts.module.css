@@ -5,20 +5,20 @@
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   
-  max-width: 1000px;   /* 👈 tăng chiều rộng */
-  margin: 0 auto;      /* canh giữa màn hình */
+  max-width: 1000px;   
+  margin: 0 auto;    
 }
 .title {
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 20px;
-  grid-column: span 2; /* tiêu đề chiếm full 2 cột */
+  grid-column: span 2; 
   color:var(--primary-text-color);
 }
 .postList {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 cột đều nhau */
-  gap: 20px 30px; /* khoảng cách hàng và cột */
+  grid-template-columns: 1fr 1fr; 
+  gap: 20px 30px; 
 }
 
 .postItem {

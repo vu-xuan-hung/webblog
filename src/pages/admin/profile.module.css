@@ -32,17 +32,13 @@ overflow: -moz-hidden-unscrollable;
     transition: background-color 0.3s;
 }
 
-/* Dark Mode styles (Sử dụng selector composition để áp dụng style) */
-/* Selector này chỉ hoạt động nếu component App1 (cha) quản lý Dark Mode qua body[data-theme="dark"] */
+
 :global(body[data-theme="dark"]) .profileCard {
-    /* Dùng :global để tham chiếu đến selector trên thẻ <body> */
+
     background-color: #374151;
 }
 
 
-/* ========================================= */
-/* THÔNG TIN & THÀNH PHẦN */
-/* ========================================= */
 
 .avatar {
     width: 96px;
@@ -58,15 +54,15 @@ overflow: -moz-hidden-unscrollable;
     margin-top: 16px;
     font-size: 24px;
     font-weight: 700;
-    color: #333333; /* Light Mode */
+    color: #333333; 
 }
 
 :global(body[data-theme="dark"]) .profileName {
-    color: #4778da; /* Dark Mode */
+    color: #4778da; 
 }
 
 .profileRole, .profileEmail, .totalBlogs {
-    color: #6b7280; /* Light Mode */
+    color: #6b7280; 
     margin-top: 4px;
     font-weight: 500;
 }
@@ -74,7 +70,7 @@ overflow: -moz-hidden-unscrollable;
 :global(body[data-theme="dark"]) .profileRole,
 :global(body[data-theme="dark"]) .profileEmail,
 :global(body[data-theme="dark"]) .totalBlogs {
-    color: #9ca3af; /* Dark Mode */
+    color: #9ca3af;
 }
 
 .totalBlogs span {

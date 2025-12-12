@@ -1,11 +1,7 @@
 import ProfileCard from "../components/ProfileCard/ProfileCard";
 import Orb from "../components/Orb/Orb";
 
-
-
-
 const Contact = () => {
-
   return (
     <div
       style={{

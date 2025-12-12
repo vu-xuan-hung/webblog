@@ -8,11 +8,6 @@ import RotatingText from '../RotatingText/RotatingText';
 const CardTitle = () => (
   <RotatingText
     texts={['Software', 'AI', 'FrontEnd', 'BackEnd!']}
-
-    // SỬA DÒNG NÀY:
-    mainClassName="px-2 sm:px-2 md:px-3 text-white py-0.5 sm:py-1 md:py-2 justify-center rounded-lg flex items-center"
-    // ĐÃ XÓA: overflow-hidden và h-[1.5em]
-
     staggerFrom="last"
     initial={{ y: "100%", opacity: 0 }}
     animate={{ y: 0, opacity: 1 }}

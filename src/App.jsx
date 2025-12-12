@@ -10,7 +10,7 @@ import {
 
 } from 'react-router-dom'; import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
+import styles from "./App.module.css";
 import Shuffle from "./components/Shuffle/Shuffle.jsx";
 import PostDetail from "./pages/PostDetail.jsx";
 import BlogList from "./components/BlogList/BlogList";
@@ -33,21 +33,19 @@ function App() {
     document.body.setAttribute("data-theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
   return (
-    <div className="body">
-      {/* Nội dung App hiển thị trên nền */}
-
+    <>
       <Navbar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
       <ToastContainer position="bottom-right" autoClose={3000} />
-      <div className="content">
+      <div className={styles.content}>
         <Routes>
           {/* Trang chủ */}
           <Route
             index
             element={
               <div className={`app ${isMobile ? "mobile" : isTablet ? "tablet" : "desktop"}`}>
-                <main className="main-content">
-                  <section className="blog-section">
-                    <h3 className="section-title">
+                <main className={styles.maincontent}>
+                  <section className={styles.blogsection}>
+                    <h3 className={styles.sectiontitle}>
                       <Shuffle
                         text="Most Post"
                         shuffleDirection="right"
@@ -61,8 +59,8 @@ function App() {
                         triggerOnHover={true}
                         respectReducedMotion={true}
                       /></h3>
-                    <div className="blog-layout">
-                      <div className="blog-grid">
+                    <div className={styles.bloglayout}>
+                      <div className={styles.bloggrid}>
                         <BlogList />
                       </div>
                     </div>
@@ -87,15 +85,15 @@ function App() {
           />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </div>
-      <div className="footer">
-        <div className="footer-content">
+      </div >
+      <div className={styles.footer}>
+        <div className={styles.footercontent}>
           <p>
             Hi! I'm <strong>Vũ Xuân Hùng</strong>, a Computer Science student at
             Hanoi University of Industry.
           </p>
 
-          <div className="social">
+          <div className={styles.social}>
             <a href="https://www.facebook.com/vu.xuan.hung.883474" target="_blank">
               <i className="fab fa-facebook"></i> Facebook
             </a>
@@ -105,13 +103,13 @@ function App() {
           </div>
         </div>
 
-        <div className="copyright">
+        <div className={styles.copyright}>
           <p>© 2025 Vũ Xuân Hùng. All rights reserved. | Designed & Developed by Hùng Vũ</p>
         </div>
       </div>
 
+    </>
 
-    </div>
   );
 
 }
