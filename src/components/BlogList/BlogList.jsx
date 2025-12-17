@@ -22,6 +22,7 @@ export default function BlogList() {
                     id: x.id ?? "unk",
                     title: x.title ?? "unk",
                     image: `${apiUrl}${x.image}`,
+                    imageTitle: `${apiUrl}${x.imageTitle}`,
                     description: x.description ?? "unk",
                     releaseDate: x.releaseDate ?? "unk",
                     content: `${apiUrl}${x.content}`,

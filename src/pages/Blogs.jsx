@@ -43,8 +43,7 @@ const Card = styled.div`
 `;
 
 const CardImage = styled.img`
-  width: 33%;
-  height: 230px;
+  width: 30%;
   object-fit: cover;
   filter: brightness(0.9);
   ${Card}:hover & {
@@ -65,7 +64,8 @@ const CardContent = styled.div`
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+ align-items: center;
 `;
 
 const CategoryLabel = styled.div`
@@ -188,11 +188,11 @@ const Search = styled.div`
 `;
 
 const MainContent1 = styled.div`
-  flex: 2;
-  
-  display: flex;
-  gap: 2rem;
- justify-content: space-around;
+ flex: 2;
+ display: flex;
+ gap: 6rem; 
+ justify-content: flex-start;
+ align-items: flex-end; 
 `;
 const CardData = styled.div`
   display: flex;
@@ -253,10 +253,9 @@ const Blogs = ({ isDarkMode, setIsDarkMode }) => {
         const mapped = data.map((x) => ({
           id: x.id ?? "unk",
           title: x.title ?? "unk",
-          image: `${apiUrl.split('/api')[0]}/FileHtml/${x.id}`,
+          imageTitle: `${apiUrl}${x.imageTitle}`,
           description: x.description ?? "unk",
           releaseDate: x.releaseDate ?? "unk",
-          content: `${apiUrl.split('/posts')[0]}/FileHtml/${x.id}.html`,
           view: x.view ?? 0,
         }));
 
@@ -301,7 +300,7 @@ const Blogs = ({ isDarkMode, setIsDarkMode }) => {
               <Card
                 style={{ backgroundColor: isDarkMode ? ' #c2edda' : '#fff' }}
               >
-                <CardImage src={post.image} alt={post.title} />
+                <CardImage src={post.imageTitle} alt={post.title} />
                 <CardContent>
                   <CardTitle>{post.title}</CardTitle>
                   <CardSummary>{post.description}</CardSummary>

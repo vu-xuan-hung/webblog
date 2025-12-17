@@ -91,10 +91,11 @@ function CreateBlog({ isDarkMode, setIsDarkMode }) {
     const [isdescription, setDescription] = useState("");
     const [imageFile, setImageFile] = useState([]);
     const [htmlFile, setHtmlFile] = useState(null);
+    const [imageTitle, setImageTitle] = useState();
     const apiUrl = import.meta.env.VITE_FILE_ALL_CONTENT;
     const apiUrl1 = import.meta.env.VITE_FILE_ALL_CONTENT_HTML;
     const apiUrl2 = import.meta.env.VITE_FILE_ALL_CONTENT_FOLDER;
-
+    const apiUrl3 = import.meta.env.VITE_FILE_ALL_CONTENT_IMGTITLE;
     const handleHtmlFile = (files) => {
         if (files && files.length > 0) {
             setHtmlFile(files[0]);
@@ -106,6 +107,11 @@ function CreateBlog({ isDarkMode, setIsDarkMode }) {
             setImageFile(Array.from(files)); // ép FileList -> array
         }
     };
+    const handleImageTitle = (file) => {
+        if (file && file.length > 0) {
+            setImageTitle(file[0]);
+        }
+    }
     let newBlogEntry; // Biến để lưu blog mới (chứa ID)
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -164,7 +170,19 @@ function CreateBlog({ isDarkMode, setIsDarkMode }) {
                 console.error("Error", error);
             }
         }
-
+        if (imageTitle) {
+            const formDataImageT = new FormData();
+            formDataImageT.append('imageTitle', imageTitle);
+            try {
+                const resImg = await fetch(`${apiUrl3}/${blogId}`, {
+                    method: "PATCH",
+                    body: formDataImageT,
+                });
+                console.log("da gui api3 ", apiUrl3);
+            } catch (error) {
+                console.error("Error", error);
+            }
+        }
     };
 
     return (
@@ -193,6 +211,13 @@ function CreateBlog({ isDarkMode, setIsDarkMode }) {
 
                 {/* Cột 2: Inputs */}
                 <InputColumn>
+                    <FileUploader
+                        id="image-title-input"
+                        title="Image Uploader"
+                        fileTypes=".jpg up to 10MB"
+                        onChange={handleImageTitle}
+                        isDarkMode={isDarkMode}
+                    />
                     <BaseInput
                         isDarkMode={isDarkMode}
                         type="text"
