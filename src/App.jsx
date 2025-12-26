@@ -34,7 +34,7 @@ function App() {
 
   return (
     <>
-      {/* Container chính: Quản lý chiều cao full màn hình và Flexbox */}
+
       <div className={styles.App}>
 
         <Navbar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
@@ -87,17 +87,7 @@ function App() {
             <Route path="post/:id" element={<PostDetail />} />
             <Route path="search" element={<SearchResult />} />
 
-            {/* Trang Iframe */}
-            <Route
-              path="aplicate"
-              element={
-                <iframe
-                  src="/R.html"
-                  style={{ width: "100%", height: "100%", border: "none", minHeight: "80vh" }}
-                  title="Cảnh"
-                />
-              }
-            />
+
 
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

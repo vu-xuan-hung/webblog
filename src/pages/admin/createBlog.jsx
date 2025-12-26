@@ -5,85 +5,95 @@ import { useState } from "react";
 import styled from "styled-components";
 
 const PageContainer = styled.div`
-    padding: 1.5rem; /* p-6 */
-    /* Áp dụng màu nền Dark/Light Mode nếu cần */
-    /* background-color: ${props => props.isDarkMode ? '#1e1e1e' : '#f4f4f4'}; */
+    padding: 1.5rem;
 `;
 
-// 2. Tiêu đề
 const Title = styled.h2`
-    font-size: 1.5rem; /* text-2xl */
+    font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: 1.5rem; /* mb-6 */
+    margin-bottom: 1.5rem;
     color: ${props => props.isDarkMode ? '#e0e0e0' : '#333333'};
 `;
 
-// 3. Form
 const FormGrid = styled.form`
-    /* grid gap-6, style={{ gridTemplateColumns: "1fr 1fr" }} */
     display: grid;
-    gap: 1.5rem; /* gap-6 */
+    gap: 1.5rem;
     grid-template-columns: 1fr 1fr;
 `;
 
-// 4. Cột chứa File Uploaders
 const UploaderColumn = styled.div`
-    /* grid, gap: 50px, flex: 1fr */
     display: grid;
     gap: 50px;
-    flex: 1; /* flex: "1fr" là không hợp lệ, dùng flex: 1 */
-`;
-
-// 5. Cột chứa Input và Textarea
-const InputColumn = styled.div`
-    /* flex flex-col space-y-4, flex: 1fr */
-    display: flex;
-    flex-direction: column;
-    gap: 1rem; /* space-y-4 */
     flex: 1;
 `;
 
-// 6. Input/Textarea cơ bản
+const InputColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
+`;
+
 const BaseInput = styled.input`
-    /* border p-2 w-full rounded */
-    border: 1px solid #d1d5db; /* border */
-    padding: 0.5rem; /* p-2 */
+    border: 1px solid #d1d5db;
+    padding: 0.5rem;
     width: 100%;
-    border-radius: 0.25rem; /* rounded */
+    border-radius: 0.25rem;
     box-sizing: border-box;
-    /* Điều chỉnh màu sắc cho Dark Mode */
     background-color: ${props => props.isDarkMode ? '#333333' : '#ffffff'};
     color: ${props => props.isDarkMode ? '#e0e0e0' : '#333333'};
     transition: background-color 0.3s, color 0.3s;
 `;
 
-// 7. Textarea (Kế thừa từ BaseInput)
 const DescriptionTextarea = styled(BaseInput).attrs({
     as: 'textarea'
 })`
-    /* h-40 */
-    height: 10rem; /* h-40 tương đương 16 * 0.25rem = 4rem, nhưng 10rem hợp lý hơn cho textarea */
+    height: 10rem;
     resize: vertical;
 `;
 
-// 8. Button
 const SubmitButton = styled.button`
-    /* bg-blue-400 text-white px-2 py-2 rounded-lg */
-    background-color: #60a5fa; /* bg-blue-400 */
+    background-color: #60a5fa;
     color: white;
-    padding: 0.5rem 0.5rem; /* px-2 py-2 */
-    border-radius: 0.5rem; /* rounded-lg */
+    padding: 0.5rem 0.5rem;
+    border-radius: 0.5rem;
     border: none;
     cursor: pointer;
     transition: background-color 0.2s;
     
-   
-    
     &:hover {
-        background-color: #3b82f6; /* Màu đậm hơn khi hover */
+        background-color: #3b82f6;
     }
-    align-self: flex-end; /* Đẩy nút xuống dưới nếu cần */
-    width: fit-content; /* Chỉ chiếm đủ chiều rộng cần thiết */
+    align-self: flex-end;
+    width: fit-content;
+`;
+
+const AIContainer = styled.div`
+  background-color: ${props => props.isDarkMode ? '#2d3748' : '#eeffff'};
+  border: 2px dashed ${props => props.isDarkMode ? '#60a5fa' : '#0ea5e9'};
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const AIInput = styled(BaseInput).attrs({ as: 'textarea' })`
+  height: 5rem;
+  resize: none;
+  font-family: monospace;
+`;
+
+const AIButton = styled(SubmitButton)`
+  background-color: #8b5cf6;
+  &:hover {
+    background-color: #7c3aed;
+  }
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `;
 
 function CreateBlog({ isDarkMode, setIsDarkMode }) {
@@ -92,95 +102,200 @@ function CreateBlog({ isDarkMode, setIsDarkMode }) {
     const [imageFile, setImageFile] = useState([]);
     const [htmlFile, setHtmlFile] = useState(null);
     const [imageTitle, setImageTitle] = useState();
+    const [aiPrompt, setAiPrompt] = useState("");
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [aiStatus, setAiStatus] = useState("");
+
     const apiUrl = import.meta.env.VITE_FILE_ALL_CONTENT;
     const apiUrl1 = import.meta.env.VITE_FILE_ALL_CONTENT_HTML;
     const apiUrl2 = import.meta.env.VITE_FILE_ALL_CONTENT_FOLDER;
     const apiUrl3 = import.meta.env.VITE_FILE_ALL_CONTENT_IMGTITLE;
+
     const handleHtmlFile = (files) => {
         if (files && files.length > 0) {
             setHtmlFile(files[0]);
         }
     };
 
-    const handleImageFile = (files) => {
-        if (files && files.length > 0) {
-            setImageFile(Array.from(files)); // ép FileList -> array
+    const handleGenerateAI = async (e) => {
+        e.preventDefault();
+        if (!aiPrompt.trim()) return;
+
+        setIsGenerating(true);
+        setAiStatus("Đang nhờ AI viết bài...");
+
+        // Dùng model 1.5-flash
+        const API_KEY = "AIzaSyBC_MXm2qo8iTjTlxpYqh7fwCOj8on0eYE";
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+
+        const systemInstruction = `
+            Bạn là một trợ lý viết blog chuyên nghiệp.
+            Nhiệm vụ: Viết bài blog dựa trên: "${aiPrompt}".
+            
+            YÊU CẦU OUTPUT:
+            1. Title: Giật tít hấp dẫn.
+            2. Description: Mô tả ngắn chuẩn SEO.
+            3. Content: Nội dung chi tiết định dạng HTML (dùng thẻ h2, p, ul, li, code...). KHÔNG dùng thẻ html, head, body bao ngoài.
+            
+            QUAN TRỌNG: Hãy đảm bảo nội dung HTML được escape đúng chuẩn JSON.
+        `;
+
+        try {
+            const res = await fetch(API_URL, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{ text: systemInstruction }]
+                    }],
+                    generationConfig: {
+                        responseMimeType: "application/json"
+                    }
+                })
+            });
+
+            if (!res.ok) throw new Error(`Lỗi API: ${res.status}`);
+
+            const rawData = await res.json();
+            let textResponse = rawData.candidates[0].content.parts[0].text;
+
+            textResponse = textResponse.replace(/```json/g, '').replace(/```/g, '').trim();
+
+            let data;
+            try {
+                data = JSON.parse(textResponse);
+            } catch (parseError) {
+                const cleanedText = textResponse.replace(/[\u0000-\u001F]+/g, "");
+                data = JSON.parse(cleanedText);
+            }
+
+            if (data.title) setTitle(data.title);
+            if (data.description) setDescription(data.description);
+
+            if (data.content) {
+                // --- ĐÂY LÀ CHỖ QUAN TRỌNG NHẤT ---
+
+                // 1. Tạo khung HTML chuẩn (Để trình duyệt không đoán mò)
+                const fullHtmlContent = `<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${data.title || 'Blog Post'}</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; color: #333; }
+        img { max-width: 100%; height: auto; }
+        pre { background: #f4f4f4; padding: 10px; overflow-x: auto; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    ${data.content}
+</body>
+</html>`;
+
+                // 2. Thêm "cái tem" BOM (\ufeff) vào đầu file
+                // Việc này làm cho file AI tạo ra GIỐNG HỆT file bạn Save bằng VS Code
+                const blob = new Blob(
+                    [new Uint8Array([0xEF, 0xBB, 0xBF]), fullHtmlContent],
+                    { type: 'text/html;charset=utf-8' }
+                );
+
+                const generatedFile = new File([blob], "ai-blog.htm", { type: "text/html" });
+
+                setHtmlFile(generatedFile);
+                setAiStatus("✅ Đã tạo bài viết thành công!");
+            }
+
+        } catch (error) {
+            console.error("Lỗi AI:", error);
+            setAiStatus("❌ Lỗi: " + error.message);
+        } finally {
+            setIsGenerating(false);
         }
     };
+    const handleImageFile = (files) => {
+        if (files && files.length > 0) {
+            setImageFile(Array.from(files));
+        }
+    };
+
     const handleImageTitle = (file) => {
         if (file && file.length > 0) {
             setImageTitle(file[0]);
         }
     }
-    let newBlogEntry; // Biến để lưu blog mới (chứa ID)
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // title, description, releaseDate
+
         const formDataBase = {
             title: istitle ?? "unk",
             description: isdescription ?? "unk",
             releaseDate: new Date().toISOString(),
             views: 0,
         }
+
+        let newBlogEntry;
         try {
             const res = await fetch(apiUrl, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formDataBase),
             });
             console.log("da gui api ", apiUrl);
             newBlogEntry = await res.json();
         } catch (error) {
             console.error("Error :", error);
+            return; // Dừng nếu tạo base thất bại
         }
+
         const blogId = newBlogEntry.id;
-        // file HTML
+
+        // Upload HTML File
         if (htmlFile) {
             const formDataHtml = new FormData();
             formDataHtml.append("htmlfile", htmlFile);
 
             try {
-                const resHtml = await fetch(`${apiUrl1}/${blogId}`, {
+                await fetch(`${apiUrl1}/${blogId}`, {
                     method: "PATCH",
                     body: formDataHtml,
                 });
                 console.log("da gui api1 ", apiUrl1);
             } catch (error) {
-                console.error("Error ", error);
+                console.error("Error html upload", error);
             }
         }
 
-        // folder Image
+        // Upload Images
         if (imageFile && imageFile.length > 0) {
             const formDataImage = new FormData();
-
             for (const file of imageFile) {
-                formDataImage.append('image', file); // Sử dụng cùng một key "files"
+                formDataImage.append('image', file);
             }
             try {
-                const resImg = await fetch(`${apiUrl2}/${blogId}`, {
+                await fetch(`${apiUrl2}/${blogId}`, {
                     method: "PATCH",
                     body: formDataImage,
                 });
-
                 console.log("da gui api2 ", apiUrl2);
             } catch (error) {
-                console.error("Error", error);
+                console.error("Error image upload", error);
             }
         }
+
+        // Upload Image Title
         if (imageTitle) {
             const formDataImageT = new FormData();
             formDataImageT.append('imageTitle', imageTitle);
             try {
-                const resImg = await fetch(`${apiUrl3}/${blogId}`, {
+                await fetch(`${apiUrl3}/${blogId}`, {
                     method: "PATCH",
                     body: formDataImageT,
                 });
                 console.log("da gui api3 ", apiUrl3);
             } catch (error) {
-                console.error("Error", error);
+                console.error("Error title image upload", error);
             }
         }
     };
@@ -190,7 +305,6 @@ function CreateBlog({ isDarkMode, setIsDarkMode }) {
             <Title isDarkMode={isDarkMode}>Create Blog</Title>
 
             <FormGrid onSubmit={handleSubmit}>
-
                 {/* Cột 1: Uploaders */}
                 <UploaderColumn>
                     <FileUploader
@@ -211,9 +325,28 @@ function CreateBlog({ isDarkMode, setIsDarkMode }) {
 
                 {/* Cột 2: Inputs */}
                 <InputColumn>
+                    <AIContainer isDarkMode={isDarkMode}>
+                        <div style={{ fontWeight: 'bold', color: isDarkMode ? '#fff' : '#333' }}>
+                            AI Content Generator ✨
+                        </div>
+                        <AIInput
+                            isDarkMode={isDarkMode}
+                            placeholder="Nhập yêu cầu: Ví dụ 'Viết blog về React JS cơ bản...'"
+                            value={aiPrompt}
+                            onChange={(e) => setAiPrompt(e.target.value)}
+                        />
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <AIButton onClick={handleGenerateAI} disabled={isGenerating}>
+                                {isGenerating ? "Đang viết..." : "Tạo bài viết"}
+                            </AIButton>
+                            <span style={{ fontSize: '0.9rem', color: isDarkMode ? '#aaa' : '#555' }}>
+                                {aiStatus}
+                            </span>
+                        </div>
+                    </AIContainer>
                     <FileUploader
                         id="image-title-input"
-                        title="Image Uploader"
+                        title="Image Title Uploader"
                         fileTypes=".jpg up to 10MB"
                         onChange={handleImageTitle}
                         isDarkMode={isDarkMode}

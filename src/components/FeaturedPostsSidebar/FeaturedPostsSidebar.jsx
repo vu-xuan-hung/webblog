@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 
 const SidebarContainer = styled.div`
   padding: 20px;
+  max-width: 20%;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #ffffff
+ 
   ;
 `;
 
@@ -15,6 +17,7 @@ const SidebarTitle = styled.h3`
   margin-bottom: 15px;
   border-bottom: 2px solid #eee;
   padding-bottom: 5px;
+  text-align: center;
   color: var(--primary-text-color);
 `;
 
