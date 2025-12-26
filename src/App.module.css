@@ -20,14 +20,14 @@
   --accent-hover: #5a95ff;
 }
 
-/* KHU VỰC ĐÃ SỬA: Đảm bảo chiều cao full màn hình */
+
 html, body {
   background-color: var(--bg);
   color: var(--text);
   transition: background 0.4s, color 0.4s;
-  margin: 0; /* Đặt lại margin và padding */
+  margin: 0; 
   padding: 0;
-  height: 100%; /* Đảm bảo body full height */
+  height: 100%; 
 }
 
 /* App container */
@@ -41,11 +41,11 @@ html, body {
   z-index: 10;
 }
 
-/* KHU VỰC ĐÃ SỬA: Content và Footer */
+
 .content {
-  flex: 1 0 auto; /* Cho phép content phình ra và đẩy footer xuống */
+  flex: 1 0 auto; 
   width: 100%;
-  padding: 0 15px; /* Thêm padding ngang mặc định để tránh nội dung chạm sát mép màn hình */
+  padding: 0 15px; 
   box-sizing: border-box;
 }
 
