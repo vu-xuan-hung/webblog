@@ -17,9 +17,6 @@ import PostDetail from "./pages/PostDetail.jsx";
 import SearchResultPage from "./pages/SearchResult.jsx";
 import Login from "./pages/Login.jsx";
 
-// Styles
-import styles from "./App.module.css";
-
 function App() {
   const preference = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [isDarkMode, setIsDarkMode] = useLocalStorage("isDark", preference);
@@ -38,10 +35,10 @@ function App() {
         <Route
           index
           element={
-            <main className={styles.maincontent}>
-              <section className={styles.blogsection}>
-                <div className={styles.herosection}>
-                  <h3 className={styles.sectiontitle}>
+            <main className="w-full">
+              <section className="w-full">
+                <div className="text-center border-b border-red-500 mb-10 py-10">
+                  <h3 className="text-4xl md:text-6xl font-bold flex justify-center items-center text-gray-900 dark:text-white">
                     <Shuffle
                       text="Most Posts"
                       shuffleDirection="right"
@@ -60,7 +57,7 @@ function App() {
                   </h3>
                 </div>
 
-                <div className={styles.bloggrid}>
+                <div className="w-full">
                   <BlogList />
                 </div>
               </section>

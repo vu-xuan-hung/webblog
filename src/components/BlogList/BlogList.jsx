@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 import React, { useState, useEffect, useRef } from "react";
 import BlogPostCard from "../BlogPostCard/BlogPostCard";
-import styles from "./BlogList.module.css";
 import { ClimbingBoxLoader } from "react-spinners"
 
 export default function BlogList() {
@@ -73,17 +72,18 @@ export default function BlogList() {
     }, []);
 
     return (
-        <div className={styles.container}>
-            {loading ? <ClimbingBoxLoader size='20px' color="var(--primary-text-color)" className={styles.loader} /> :
-                <div className={styles.xd}>
-
+        <div className="w-full max-w-7xl mx-auto px-4 pb-12">
+            {loading ?
+                <div className="flex justify-center items-center h-64">
+                    <ClimbingBoxLoader size='20px' color="var(--primary-text-color)" />
+                </div>
+                :
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {visiblePosts.map((post) => (
                         <BlogPostCard key={post.id} post={post} />//cac bai viet
                     ))}
                 </div>
             }
-
-
         </div>
     );
 }
