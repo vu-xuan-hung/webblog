@@ -5,7 +5,9 @@ import { NavLink } from "react-router-dom";
 import SearchBar from '../Search/Search.jsx';
 import Switch from '@mui/material/Switch';
 import { styled } from '@mui/material/styles';
-
+import { googleLogout } from '@react-oauth/google';
+import axios from 'axios';
+import { Button, Avatar, Menu, MenuItem, IconButton, Typography } from '@mui/material';
 
 // Custom switch với icon
 const ThemeSwitch = styled(Switch)(({ theme }) => ({
@@ -48,6 +50,32 @@ const ThemeSwitch = styled(Switch)(({ theme }) => ({
 }));
 
 const Header = ({ isDarkMode, toggleDarkMode }) => {
+  const [user, setUser] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  /* Removed direct Google Login hook - Logic moved to Login.jsx */
+
+  const logOut = () => {
+    googleLogout();
+    setUser(null);
+    localStorage.removeItem('user');
+    setAnchorEl(null);
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
@@ -72,10 +100,56 @@ const Header = ({ isDarkMode, toggleDarkMode }) => {
 
         <SearchBar />
 
-        <ThemeSwitch
-          checked={isDarkMode}
-          onChange={toggleDarkMode}
-        />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <ThemeSwitch
+            checked={isDarkMode}
+            onChange={toggleDarkMode}
+          />
+
+          {user ? (
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+                style={{ padding: 0 }}
+              >
+                <Avatar alt={user.name} src={user.picture} />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem disabled><Typography variant="body2">{user.name}</Typography></MenuItem>
+                <MenuItem onClick={logOut}>Logout</MenuItem>
+              </Menu>
+            </div>
+          ) : (
+            <Button
+              variant="contained"
+              color="primary"
+              component={NavLink}
+              to="/login"
+              style={{ textTransform: 'none', fontWeight: 'bold' }}
+            >
+              Sign In
+            </Button>
+          )}
+        </div>
 
       </header >
 

@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ChakraProvider } from "@chakra-ui/react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import "./index.css"
 import App from "./App";     // frontend
@@ -13,14 +12,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={muiTheme}>
-        <ChakraProvider>
-          <Routes>
-            {/* Admin */}
-            <Route path="/admin/*" element={<App1 />} />
-            {/* Frontend */}
-            <Route path="/*" element={<App />} />
-          </Routes>
-        </ChakraProvider>
+        <Routes>
+          {/* Admin */}
+          <Route path="/admin/*" element={<App1 />} />
+          {/* Frontend */}
+          <Route path="/*" element={<App />} />
+        </Routes>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
