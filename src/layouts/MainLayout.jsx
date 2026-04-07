@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Navbar from '../components/Nav/Navbar.jsx';
 import styles from '../App.module.css';
+import ProfileHeader from '../components/Profile/ProfileHeader.jsx';
+import { Container, Box, Typography } from '@mui/material';
 
 const MainLayout = ({ isDarkMode, toggleDarkMode }) => {
     return (
@@ -11,31 +13,25 @@ const MainLayout = ({ isDarkMode, toggleDarkMode }) => {
 
             <ToastContainer position="bottom-right" autoClose={3000} />
 
-            <div className={styles.content}>
-                <Outlet />
-            </div>
+            <Container maxWidth="md" sx={{ px: 2, py: 3, flex: '1 0 auto', display: 'flex', flexDirection: 'column' }}>
+                <ProfileHeader />
+                <Box sx={{ width: '100%' }}>
+                    <Outlet />
+                </Box>
+            </Container>
 
-            <footer className={styles.footer}>
-                <div className={styles.footercontent}>
-                    <p>
-                        Hi! I'm <strong>Vũ Xuân Hùng</strong>, a Computer Science student at
-                        Hanoi University of Industry.
-                    </p>
-
-                    <div className={styles.social}>
-                        <a href="https://www.facebook.com/vu.xuan.hung.883474" target="_blank" rel="noreferrer">
-                            <i className="fab fa-facebook"></i> Facebook
-                        </a>
-                        <a href="https://github.com/vu-xuan-hung" target="_blank" rel="noreferrer">
-                            <i className="fab fa-github"></i> GitHub
-                        </a>
-                    </div>
-                </div>
-
-                <div className={styles.copyright}>
-                    <p>© 2025 Vũ Xuân Hùng. All rights reserved. | Designed & Developed by Hùng Vũ</p>
-                </div>
-            </footer>
+            <Box component="footer" sx={{
+                py: 3,
+                textAlign: 'center',
+                borderTop: '1px solid',
+                borderColor: 'divider',
+                mt: 'auto',
+                bgcolor: 'background.paper'
+            }}>
+                <Typography variant="body2" color="text.secondary">
+                    © 2025 Vũ Xuân Hùng. All rights reserved. | Designed & Developed by Hùng Vũ
+                </Typography>
+            </Box>
         </div>
     );
 };

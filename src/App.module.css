@@ -2,38 +2,41 @@
 
 :root {
   /* Light theme */
-  --background-color: #ffffff;
-  --foreground-color: #f5f5f5;
-  --primary-text-color: #000000;
-  --secondary-text-color: #555555;
-  --accent-color: #003cff;
-  --accent-hover: #0026b3;
+  --background-color: #f3f4f6;
+  /* Soft grey for mobile app feel */
+  --foreground-color: #ffffff;
+  --primary-text-color: #111827;
+  --secondary-text-color: #6b7280;
+  --accent-color: #2563eb;
+  --accent-hover: #1d4ed8;
 }
 
 [data-theme="dark"] {
   /* Dark theme */
-  --background-color: rgb(34, 33, 33);
-  --foreground-color: #5a95ff;
-  --primary-text-color: #1877f2;
-  --secondary-text-color: #917676;
-  --accent-color: #1771f8;
-  --accent-hover: #5a95ff;
+  --background-color: #0f172a;
+  --foreground-color: #1e293b;
+  --primary-text-color: #f1f5f9;
+  --secondary-text-color: #94a3b8;
+  --accent-color: #3b82f6;
+  --accent-hover: #60a5fa;
 }
 
 
-html, body {
+html,
+body {
   background-color: var(--background-color);
   color: var(--primary-text-color);
   transition: background 0.4s, color 0.4s;
-  margin: 0; 
+  margin: 0;
   padding: 0;
-  height: 100%; 
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 /* App container */
 .App {
   width: 100%;
-  min-height: 100vh; 
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background: var(--background-color);
@@ -41,78 +44,31 @@ html, body {
   z-index: 10;
 }
 
-
-.content {
-  flex: 1 0 auto; 
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px; 
-  box-sizing: border-box;
-}
-
-.footer {
-  background: linear-gradient(135deg, #1e293b, #0f172a);
-  color: #f1f5f9;
-  padding: 20px;
-  text-align: center;
-  margin-top: auto;
-  font-family: "Poppins", sans-serif;
-}
-
-.footercontent p {
-  font-size: 1.1rem;
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-
-.social a {
-  color: #94a3b8;
-  text-decoration: none;
-  margin: 0 10px;
-  transition: all 0.3s ease;
-  font-weight: 500;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.social a:hover {
-  color: #38bdf8;
-  transform: scale(1.1);
-}
-
-.copyright {
-  border-top: 1px solid #334155;
-  margin-top: 20px;
-  padding-top: 10px;
-  font-size: 0.9rem;
-  color: #94a3b8;
-}
-
 /* Hero section */
 .herosection {
   text-align: center;
-  border-bottom: 1px solid #a94444;
-  margin-bottom: 40px;
-  padding: 40px 0;
+  margin-bottom: 24px;
+  padding: 20px 0;
 }
 
-.herosection h2 {
-  font-size: clamp(40px, 8vw, 80px);
+.sectiontitle {
+  font-size: 24px;
   font-weight: 700;
-  margin: 0;
   color: var(--primary-text-color);
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
 }
 
-.herosection p {
-  font-size: 18px;
-  color: var(--secondary-text-color);
-  max-width: 600px;
-  margin: 15px auto 30px;
+/* Blog grid */
+.bloggrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  justify-content: center;
 }
 
-/* Search box */
+/* Search box - Keep generic styles if used elsewhere */
 .searchbox {
   display: flex;
   justify-content: center;
@@ -120,106 +76,8 @@ html, body {
   flex-wrap: wrap;
 }
 
-.searchbox input {
-  padding: 12px 20px;
-  border: 1px solid #b25959;
-  border-radius: 5px;
-  width: 100%;
-  max-width: 300px;
-  color: initial; /* Let browser decide or inherit from body properly */
-}
-
-.searchbox button {
-  padding: 12px 20px;
-  background-color: var(--accent-color);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  white-space: nowrap;
-}
-.searchbox button:hover {
-  background-color: var(--accent-hover);
-}
-
-/* Blog layout */
-.bloglayout {
-  display: flex;
-  gap: 20px;
-}
-
-.blogsection {
-  flex-grow: 1;
-  width: 100%;
-}
-
-.sectiontitle {
-  font-size: 36px;
-  font-weight: 600;
-  color: var(--primary-text-color);
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-/* Blog grid */
-.bloggrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  justify-content: center;
-}
-
-/* Sidebar */
-.featuredsidebar {
-  width: 350px;
-  flex-shrink: 0;
-  padding: 20px;
-  background-color: var(--foreground-color);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  height: fit-content;
-}
-
-/* Tablet (<= 1024px) */
-@media screen and (max-width: 1024px) {
-  .bloglayout {
-    flex-direction: column; 
-    padding: 0;
-  }
-
-  .featuredsidebar {
-    width: 100%;
-    margin-bottom: 20px;
-    order: -1; 
-  }
-
-  .bloggrid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  }
-}
-
-
-/* Mobile (<= 600px) */
+/* Mobile optimizations */
 @media screen and (max-width: 600px) {
-  .herosection h2 {
-    font-size: 32px;
-  }
-
-  .searchbox {
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-
-  .searchbox input,
-  .searchbox button {
-    width: 100%;
-    max-width: 100%; 
-    margin-bottom: 10px;
-  }
-  
   .bloggrid {
     grid-template-columns: 1fr;
   }

@@ -10,9 +10,9 @@
 
 .xd {
   display: grid;
-  grid-template-columns: 250px 250px 250px; /* 3 cột */
-  gap: 4.5rem; /* khoảng cách giữa các card */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  width: 100%;
 }
-.loader {
- 
-}
+
+.loader {}
